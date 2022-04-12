@@ -1,5 +1,5 @@
 import socket
-
+import pandas as pd
 
 class Server():
     def __init__(self):
@@ -33,4 +33,17 @@ class Server():
             mail = io_stream_client.readline().rstrip('\n')
             print(f"Number 2: {mail}")
 
-server = Server()
+
+class ReadingCSV():
+    df = pd.read_csv('../Data/ElectricCarData_Norm.csv')
+
+    def __init__(self):
+        df = pd.read_csv('../Data/ElectricCarData_Norm.csv')
+        print(df[['Brand','Model']])
+
+
+
+
+
+#server = Server()
+CSV = ReadingCSV()
