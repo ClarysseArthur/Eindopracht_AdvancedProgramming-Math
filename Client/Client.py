@@ -8,7 +8,7 @@ from tkinter.ttk import Combobox
 import jsonpickle
 
 from data_view import DataView
-
+from Models.Client import Client
 
 class StartApp(Tk):
     def __init__(self):
@@ -78,11 +78,19 @@ class Start(Frame):
             self.in_out_server = self.s.makefile(mode='rw')
             logging.info("Open connection with server succesfully")
 
+            client = Client(self.entry_username.get(), self.entry_email.get())
+
+            self.send_message_to_server(jsonpickle.encode(client))
             master.switch_frame("data", self)
 
         else:
             messagebox.showerror("Connect to server",
                                  "All fields must be filled in!")
+
+    def send_message_to_server(self, message):
+        io_stream_server = self.s.makefile(mode='rw')
+        io_stream_server.write(f"{message}\n")
+        io_stream_server.flush()
 
     def close_connection(self):
         try:

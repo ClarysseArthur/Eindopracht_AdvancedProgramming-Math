@@ -6,6 +6,8 @@ class ClientHandler(threading.Thread):
 
     numbers_clienthandlers = 0
 
+    client_list = []
+
     def __init__(self, socketclient, messages_queue):
         threading.Thread.__init__(self)
         # connectie with client
@@ -18,10 +20,12 @@ class ClientHandler(threading.Thread):
         ClientHandler.numbers_clienthandlers += 1
 
     def run(self):
-
-        self.print_bericht_gui_server("Waiting for numbers...")
-
         commando = self.in_out_clh.readline().rstrip('\n')
+        client = jsonpickle.decode(commando)
+        ClientHandler.client_list.append(client)
+
+        print(ClientHandler.client_list)
+
         while commando != "CLOSE":
             # Code
 
