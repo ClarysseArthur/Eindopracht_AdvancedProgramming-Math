@@ -1,36 +1,55 @@
+import logging
 import socket
+import threading
+
+from clienthandler import ClientHandler
+
+class Server(threading.Thread):
+    def __init__(self, host, port, messages_queue):
+        threading.Thread.__init__(self, name="Thread-Server", daemon=True)
+        self.serversocket = None
+        self.__is_connected = False
+        self.host = host
+        self.port = port
+        self.messages_queue = messages_queue
+
+    @property
+    def is_connected(self):
+        return self.__is_connected
+
+    def init_server(self):
+        self.serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.serversocket.bind((self.host, self.port))
+        self.serversocket.listen(5)
+        self.__is_connected = True
+        self.print_bericht_gui_server("SERVER STARTED")
+
+    def stop_server(self):
+        if self.serversocket is not None:
+            self.serversocket.close()
+            self.serversocket = None
+            self.__is_connected = False
+            logging.info("Serversocket closed")
+
+    def run(self):
+        number_received_message = 0
+        try:
+            while True:
+                logging.debug("Server waiting for a new client")
+                self.print_bericht_gui_server("waiting for a new client...")
+
+                # establish a connection
+                socket_to_client, addr = self.serversocket.accept()
+                self.print_bericht_gui_server(f"Got a connection from {addr}")
+                clh = ClientHandler(socket_to_client, self.messages_queue)
+                clh.start()
+                self.print_bericht_gui_server(f"Current Thread count: {threading.active_count()}.")
+
+        except Exception as ex:
+            self.print_bericht_gui_server("Serversocket afgesloten")
+            logging.debug("Thread server ended")
 
 
-class Server():
-    def __init__(self):
-        self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        host = socket.gethostname()
-        port = 6666
+    def print_bericht_gui_server(self, message):
+        self.messages_queue.put(f"Server:> {message}")
 
-        self.server_socket.bind((host, port))
-        self.server_socket.listen(50)
-
-        while True:
-            print('Waiting for a client')
-            self.client_socket, addr = self.server_socket.accept()
-
-            print(f'Got a conection from {addr}')
-
-            io_stream_client = self.client_socket.makefile(mode='rw')
-            io_stream_client.write('Connected')
-            io_stream_client.flush()
-            
-            self.socket_to_client, addr = self.server_socket.accept()
-            io_stream_client = self.socket_to_client.makefile(mode='rw')
-            commando = io_stream_client.readline().rstrip('\n')
-
-            name = io_stream_client.readline().rstrip('\n')
-            print(name)
-
-            nick = io_stream_client.readline().rstrip('\n')
-            print(f"Number 2: {nick}")
-
-            mail = io_stream_client.readline().rstrip('\n')
-            print(f"Number 2: {mail}")
-
-server = Server()
