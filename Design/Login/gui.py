@@ -51,11 +51,7 @@ entry_bg_1 = canvas.create_image(
     274.5,
     image=entry_image_1
 )
-entry_1 = Entry(
-    bd=0,
-    bg="#F4F8F5",
-    highlightthickness=0
-)
+entry_1 = Entry(bd=0,bg="#F4F8F5",highlightthickness=0)
 entry_1.place(
     x=481.0,
     y=245.0+29,
