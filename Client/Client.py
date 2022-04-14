@@ -22,7 +22,7 @@ class StartApp(Tk):
         """Destroys current frame and replaces it with a new one."""
         if self._frame is not None:
             self._frame.destroy()
-
+    
         if name_class == "start":
             new_frame = Start(self)
         elif name_class == "data":
