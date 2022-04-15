@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="00580f48-e682-4b1e-a433-038e0cf974b4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/EvCars.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/csvjson.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Eindopracht_AdvancedProgramming-Math.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Eindopracht_AdvancedProgramming-Math.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/data_view.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/data_view.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/gui_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/gui_server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,10 +146,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.Client" />
+        <item itemvalue="Python.data_view" />
         <item itemvalue="Python.start" />
         <item itemvalue="Python.Server" />
         <item itemvalue="Python.EvCars" />
-        <item itemvalue="Python.data_view" />
       </list>
     </recent_temporary>
   </component>
@@ -169,6 +163,7 @@
       <updated>1649936119179</updated>
       <workItem from="1649936119194" duration="4000" />
       <workItem from="1649950027191" duration="9390000" />
+      <workItem from="1650023186791" duration="4132000" />
     </task>
     <servers />
   </component>
@@ -189,9 +184,9 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$EvCars.coverage" NAME="EvCars Coverage Results" MODIFIED="1649955078270" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Data" />
     <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$clienthandler.coverage" NAME="clienthandler Coverage Results" MODIFIED="1649954190074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
-    <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$Client.coverage" NAME="Client Coverage Results" MODIFIED="1649958229354" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$start.coverage" NAME="start Coverage Results" MODIFIED="1649957867576" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
-    <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$data_view.coverage" NAME="data_view Coverage Results" MODIFIED="1649954271238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$Client.coverage" NAME="Client Coverage Results" MODIFIED="1650027899119" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$start.coverage" NAME="start Coverage Results" MODIFIED="1650027074259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
+    <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$data_view.coverage" NAME="data_view Coverage Results" MODIFIED="1650027895830" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$Server.coverage" NAME="Server Coverage Results" MODIFIED="1649957848570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
   </component>
 </project>

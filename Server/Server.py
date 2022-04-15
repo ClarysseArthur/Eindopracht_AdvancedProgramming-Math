@@ -1,6 +1,9 @@
 import logging
 import socket
 import threading
+import os
+import math
+import pickle
 
 import jsonpickle
 
@@ -45,12 +48,9 @@ class Server(threading.Thread):
                 self.print_bericht_gui_server(f"Got a connection from {addr}")
                 clh = ClientHandler(socket_to_client, self.messages_queue)
                 clh.start()
-                my_writer_obj = socket_to_client.makefile(mode='rw')
-                my_writer_obj.write(f"{jsonpickle.encode(Cars)}\n")
-                my_writer_obj.flush()
 
 
-                self.print_bericht_gui_server(f"Current Thread count: {threading.active_count()}.")
+
 
         except Exception as ex:
             self.print_bericht_gui_server("Serversocket afgesloten")
@@ -60,3 +60,24 @@ class Server(threading.Thread):
     def print_bericht_gui_server(self, message):
         self.messages_queue.put(f"Server:> {message}")
 
+
+    def send_image(self):
+
+        filename = '../Assets/Auto/tesla/modelslongrange.png'
+        f = open(filename, 'rb')
+        print(os.path.getsize(filename))
+
+        size_in_bytes = os.path.getsize(filename)
+
+        number_sends = size_in_bytes // 1024
+        print(math.ceil(size_in_bytes / 1024))
+        print(number_sends)
+
+        pickle.dump("%d" % number_sends, self.in_out_clh)
+        self.in_out_clh.flush()
+        self.print_bericht_gui_server(f"Current Thread count: {threading.active_count()}.")
+        l = f.read(1024)
+        while (l):
+            self.socketclient.send(l)
+            # volgende 1024 bytes inlezen
+            l = f.read(1024)
