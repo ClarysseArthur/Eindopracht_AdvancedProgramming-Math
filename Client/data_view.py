@@ -4,8 +4,9 @@ import threading
 import tkinter
 from tkinter import *
 import jsonpickle
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
+import pickle
 
 
 class DataView(Frame):
@@ -16,6 +17,8 @@ class DataView(Frame):
         self.in_out_clh = self.server.s.makefile(mode='rw')
         threading.Thread(target=self.receive_messages).start()
         self.init_window()
+        #self.makeConnnectionWithServer()
+
 
     def init_window(self):
         self.master.title("Electric cars")
