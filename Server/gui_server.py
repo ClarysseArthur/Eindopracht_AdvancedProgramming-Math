@@ -5,7 +5,7 @@ from queue import Queue
 from threading import Thread
 from tkinter import *
 
-from server import Server
+from Server import Server
 
 class ServerWindow(Frame):
     def __init__(self, master=None):
