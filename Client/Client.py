@@ -19,7 +19,6 @@ class StartApp(Tk):
     # we switchen tss 3 frames: startframe <> bmiframe, startframe <> numbersframe
 
     def switch_frame(self, name_class, server):
-        """Destroys current frame and replaces it with a new one."""
         if self._frame is not None:
             self._frame.destroy()
     
@@ -84,8 +83,7 @@ class Start(Frame):
             master.switch_frame("data", self)
 
         else:
-            messagebox.showerror("Connect to server",
-                                 "All fields must be filled in!")
+            messagebox.showerror("Connect to server", "All fields must be filled in!")
 
     def send_message_to_server(self, message):
         io_stream_server = self.s.makefile(mode='rw')

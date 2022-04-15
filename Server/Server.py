@@ -1,3 +1,4 @@
+import base64
 import logging
 import socket
 import threading
@@ -5,7 +6,9 @@ import threading
 import jsonpickle
 
 from clienthandler import ClientHandler
-from Data.EvCars import EvCars
+from Models.EvCars import EvCars
+from Models.EvCarsCalc import EvCarsCalc
+
 class Server(threading.Thread):
     def __init__(self, host, port, messages_queue):
         threading.Thread.__init__(self, name="Thread-Server", daemon=True)
@@ -26,6 +29,20 @@ class Server(threading.Thread):
         self.__is_connected = True
         self.print_bericht_gui_server("SERVER STARTED")
 
+        json_file = open("../Assets/cars.json", mode='r')
+        json_data = json_file.read()
+
+        self.cars = jsonpickle.decode(json_data)
+
+        self.cars_object_list = []
+
+        for car in self.cars:
+            with open(f"../Assets/Img/Car/{car['Brand'].lower().replace(' ', '')}/{car['Model'].lower().replace(' ', '')}.png", "rb") as image2string: 
+                car_object = EvCars(car['Brand'], car['Model'], car['Accel'], car['TopSpeed'], car['Range'], car['Efficiency'], car['FastCharge'], car['RapidCharge'], car['PowerTrain'], car['PlugType'], car['BodyStyle'], car['Segment'], car['Seats'], car['PriceEuro'], base64.b64encode(image2string.read()))
+                self.cars_object_list.append(car_object)
+    
+        self.evcars_calc = EvCarsCalc(self.cars_object_list)
+
     def stop_server(self):
         if self.serversocket is not None:
             self.serversocket.close()
@@ -35,28 +52,25 @@ class Server(threading.Thread):
 
     def run(self):
         number_received_message = 0
-        try:
-            while True:
-                logging.debug("Server waiting for a new client")
-                self.print_bericht_gui_server("waiting for a new client...")
+        #try:
+        while True:
+            logging.debug("Server waiting for a new client")
+            self.print_bericht_gui_server("waiting for a new client...")
 
-                # establish a connection
-                socket_to_client, addr = self.serversocket.accept()
-                self.print_bericht_gui_server(f"Got a connection from {addr}")
-                clh = ClientHandler(socket_to_client, self.messages_queue)
-                clh.start()
-                my_writer_obj = socket_to_client.makefile(mode='rw')
-                my_writer_obj.write(f"{jsonpickle.encode(Cars)}\n")
-                my_writer_obj.flush()
+            # establish a connection
+            socket_to_client, addr = self.serversocket.accept()
+            self.print_bericht_gui_server(f"Got a connection from {addr}")
 
+            clh = ClientHandler(socket_to_client, self.messages_queue, self.evcars_calc)
+            clh.start()
+            
 
-                self.print_bericht_gui_server(f"Current Thread count: {threading.active_count()}.")
+            self.print_bericht_gui_server(
+                f"Current Thread count: {threading.active_count()}.")
 
-        except Exception as ex:
-            self.print_bericht_gui_server("Serversocket afgesloten")
-            logging.debug("Thread server ended")
-
+        #except Exception as ex:
+         #   self.print_bericht_gui_server(ex)
+          #  logging.debug("Thread server ended")
 
     def print_bericht_gui_server(self, message):
         self.messages_queue.put(f"Server:> {message}")
-
