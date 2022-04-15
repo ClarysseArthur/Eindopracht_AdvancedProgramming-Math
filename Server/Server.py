@@ -2,8 +2,10 @@ import logging
 import socket
 import threading
 
-from clienthandler import ClientHandler
+import jsonpickle
 
+from clienthandler import ClientHandler
+from Data.EvCars import EvCars
 class Server(threading.Thread):
     def __init__(self, host, port, messages_queue):
         threading.Thread.__init__(self, name="Thread-Server", daemon=True)
@@ -43,6 +45,11 @@ class Server(threading.Thread):
                 self.print_bericht_gui_server(f"Got a connection from {addr}")
                 clh = ClientHandler(socket_to_client, self.messages_queue)
                 clh.start()
+                my_writer_obj = socket_to_client.makefile(mode='rw')
+                my_writer_obj.write(f"{jsonpickle.encode(Cars)}\n")
+                my_writer_obj.flush()
+
+
                 self.print_bericht_gui_server(f"Current Thread count: {threading.active_count()}.")
 
         except Exception as ex:
