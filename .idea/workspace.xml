@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="00580f48-e682-4b1e-a433-038e0cf974b4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/EvCars.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/csvjson.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Eindopracht_AdvancedProgramming-Math.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Eindopracht_AdvancedProgramming-Math.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/data_view.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/data_view.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/gui_server.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/gui_server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/EvCars.py" beforeDir="false" afterPath="$PROJECT_DIR$/Data/EvCars.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,6 +162,7 @@
       <updated>1649936119179</updated>
       <workItem from="1649936119194" duration="4000" />
       <workItem from="1649950027191" duration="9390000" />
+      <workItem from="1650023186791" duration="311000" />
     </task>
     <servers />
   </component>

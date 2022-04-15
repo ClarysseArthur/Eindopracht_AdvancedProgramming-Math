@@ -20,4 +20,3 @@ class EvCars:
             y = x['Brand'],x['Model']
             carmodelandbrand.append(y)
         return carmodelandbrand
-
