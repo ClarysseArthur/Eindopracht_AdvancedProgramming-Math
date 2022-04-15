@@ -14,6 +14,8 @@ class DataView(Frame):
         self.master = master
         self.server = server
         self.init_window()
+        #self.makeConnnectionWithServer()
+
 
     def init_window(self):
         self.master.title("Electric cars")
@@ -134,19 +136,30 @@ class DataView(Frame):
         Grid.rowconfigure(self, 5, weight=1)
         Grid.columnconfigure(self, 5, weight=1)
 
-        host = socket.gethostname()
-        port = 9999
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        self.s.connect((host, port))
+    def __del__(self):
+        self.close_connection()
 
 
+    def makeConnnectionWithServer(self):
+        try:
+            logging.info("Making connection with server...")
+            # get local machine name
+            host = socket.gethostname()
+            port = 9999
+            self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            # connection to hostname on the port.
+            self.s.connect((host, port))
 
-
+            self.in_out_server = self.s.makefile(mode='rwb')
+            logging.info("Open connection with server succesfully")
+        except Exception as ex:
+            logging.error("Foutmelding: %s" % str(ex))
+            messagebox.showinfo("Connection - foutmelding", "Something has gone wrong...")
 
 
     def ask_image(self):
         try:
+            logging.info('getting img')
             pickle.dump("get_random_image", self.in_out_server)
             self.in_out_server.flush()
 
