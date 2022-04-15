@@ -1,9 +1,11 @@
+import logging
 import socket
 import tkinter
 from tkinter import *
 import jsonpickle
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
+import pickle
 
 
 class DataView(Frame):
@@ -47,7 +49,7 @@ class DataView(Frame):
         self.lbl_model.grid(row=1, column=3, sticky=W, padx=(5, 5), pady=(5, 5))
 
         self.img_temp = PhotoImage(file='../Assets/temp.png').subsample(2)
-        self.img_car = Label(self, image=self.img_temp, width=400, height=200, )
+        self.img_car = Label(self, width=400, height=200,image=self.img_temp)
         self.img_car.grid(row=0, column=4, rowspan=3, sticky=W + E, padx=(5, 5), pady=(5, 5))
 
         self.spt_split = ttk.Separator(self, orient='horizontal').grid(row=3, column=3, columnspan=2, sticky=E + W)
@@ -132,26 +134,46 @@ class DataView(Frame):
         Grid.rowconfigure(self, 5, weight=1)
         Grid.columnconfigure(self, 5, weight=1)
 
-        # host = socket.gethostname()
-        # port = 9999
-        # self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        #
-        # self.s.connect((host, port))
-        # self.in_out_server = self.s.makefile(mode='rw')
-        # io_stream_server = self.s.makefile(mode='rw')
-        # message = io_stream_server.readline().rstrip('\n')
-        # for x in message:
-        #     i = 0
-        #     y = x
-        #
-        #     self.lst_searchresult.insert(i, message[i])
-        #     i+1
+        host = socket.gethostname()
+        port = 9999
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        self.s.connect((host, port))
 
 
 
 
 
 
+    def ask_image(self):
+        try:
+            pickle.dump("get_random_image", self.in_out_server)
+            self.in_out_server.flush()
+
+            #image binnenhalen
+            answer = pickle.load(self.in_out_server)
+            number_of_sends = int(answer)
+
+            with open('received_file', 'wb+') as f:
+                for i in range(0, number_of_sends):
+                    data = self.s.recv(1024)
+                    f.write(data)
+
+            logging.info('Successfully get the image')
+
+            # showing image
+            im = Image.open('received_file')
+            im.resize(400,200)
+            self.img = ImageTk.PhotoImage(im)
+
+            self.img_car['image'] = self.img
+            #change size window
+            width, height = im.size
+            self.master.geometry("%dx%d" %(width, height))
+
+        except Exception as ex:
+            logging.error("Foutmelding: %s" % ex)
+            messagebox.showinfo("Get image from server", "Something has gone wrong...")
 
 
 
