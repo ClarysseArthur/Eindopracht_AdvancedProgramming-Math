@@ -10,6 +10,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -146,8 +153,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.Client" />
-        <item itemvalue="Python.data_view" />
         <item itemvalue="Python.start" />
+        <item itemvalue="Python.data_view" />
         <item itemvalue="Python.Server" />
         <item itemvalue="Python.EvCars" />
       </list>
@@ -164,6 +171,7 @@
       <workItem from="1649936119194" duration="4000" />
       <workItem from="1649950027191" duration="9390000" />
       <workItem from="1650023186791" duration="4132000" />
+      <workItem from="1650041254060" duration="12093000" />
     </task>
     <servers />
   </component>
@@ -181,11 +189,18 @@
       </map>
     </option>
   </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="self.options[3]" />
+      </configuration>
+    </watches-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$EvCars.coverage" NAME="EvCars Coverage Results" MODIFIED="1649955078270" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Data" />
     <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$clienthandler.coverage" NAME="clienthandler Coverage Results" MODIFIED="1649954190074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
-    <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$Client.coverage" NAME="Client Coverage Results" MODIFIED="1650027899119" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$start.coverage" NAME="start Coverage Results" MODIFIED="1650027074259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
+    <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$Client.coverage" NAME="Client Coverage Results" MODIFIED="1650055147800" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$start.coverage" NAME="start Coverage Results" MODIFIED="1650044571101" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
     <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$data_view.coverage" NAME="data_view Coverage Results" MODIFIED="1650027895830" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$Server.coverage" NAME="Server Coverage Results" MODIFIED="1649957848570" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
   </component>
