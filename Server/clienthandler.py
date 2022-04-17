@@ -4,6 +4,7 @@ import jsonpickle
 import json
 
 from Models.EvCarsCalc import EvCarsCalc
+from Models.EvGraph import EvGraph
 
 
 class ClientHandler(threading.Thread):
@@ -50,10 +51,13 @@ class ClientHandler(threading.Thread):
                 req = jsonpickle.decode(commando)
 
                 if req['request'] == 'search':
-                    data = jsonpickle.encode(
-                        self.evcars_calc.select_car(req['query']))
-                    self.my_writer_obj.write(
-                        '{"return": "search", "data": ' + data + '}\n')
+                    data = jsonpickle.encode(self.evcars_calc.select_car(req['query']))
+                    self.my_writer_obj.write('{"return": "search", "data": ' + data + '}\n')
+                    self.my_writer_obj.flush()
+
+                elif req['request'] == 'graph':
+                    graph = EvGraph(req['query'])
+                    self.my_writer_obj.write('{"return": "graph", "data": ' + graph.graph() + '}\n')
                     self.my_writer_obj.flush()
 
             commando = self.in_out_clh.readline().rstrip('\n')
