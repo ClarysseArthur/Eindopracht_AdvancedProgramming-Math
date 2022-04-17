@@ -1,3 +1,4 @@
+from multiprocessing.connection import Client
 import threading
 import jsonpickle
 import json
@@ -11,7 +12,7 @@ class ClientHandler(threading.Thread):
 
     client_list = []
 
-    def __init__(self, socketclient, messages_queue, evcars_calc):
+    def __init__(self, socketclient, addr, messages_queue, evcars_calc, gui):
         threading.Thread.__init__(self)
         # connectie with client
         self.socketclient = socketclient
@@ -21,16 +22,21 @@ class ClientHandler(threading.Thread):
         self.id = ClientHandler.numbers_clienthandlers
         self.in_out_clh = self.socketclient.makefile(mode='rw')
         ClientHandler.numbers_clienthandlers += 1
+        self.gui = gui
+        self.addr = addr
 
         self.evcars_calc = evcars_calc
         self.my_writer_obj = self.socketclient.makefile(mode='rw')
 
     def run(self):
         commando = self.in_out_clh.readline().rstrip('\n')
-        client = jsonpickle.decode(commando)
-        ClientHandler.client_list.append(client)
 
+        client = jsonpickle.decode(commando)
+        client.set_id_ip(self.addr[1], self.addr[0])
+        ClientHandler.client_list.append(client)
         print(ClientHandler.client_list)
+        self.gui.show_connected_users(ClientHandler.client_list)
+        self.client = client
 
         commando = ''
         test = self.evcars_calc.all_cars()
@@ -54,6 +60,8 @@ class ClientHandler(threading.Thread):
 
         self.print_bericht_gui_server("Connection with client closed...")
         self.socketclient.close()
+        ClientHandler.client_list.remove(self.client)
+        self.gui.show_connected_users(ClientHandler.client_list)
 
     def print_bericht_gui_server(self, message):
         self.messages_queue.put(f"CLH {self.id}:> {message}")

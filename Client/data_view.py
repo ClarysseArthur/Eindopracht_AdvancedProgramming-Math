@@ -37,16 +37,18 @@ class DataView(Frame):
         self.icn_style = PhotoImage(file='./Assets/style.png').subsample(2)
         self.icn_segment = PhotoImage(file='./Assets/segment.png').subsample(2)
 
-        Label(self, text="Search a car", font=('Arial', 15, 'bold')).grid(row=0, column=0, sticky=E + W, columnspan=2)
+        Button(self, text='Disconnect from server', command=self.disconnect_from_server).grid(row=0, column=0, sticky=E + W, columnspan=2)
+
+        Label(self, text="Search a car", font=('Arial', 15, 'bold')).grid(row=1, column=0, sticky=E + W, columnspan=2)
 
         self.entry_search = Entry(self, width=30)
-        self.entry_search.grid(row=1, column=0, sticky=E + W, padx=(5, 5), pady=(5, 5))
+        self.entry_search.grid(row=2, column=0, sticky=E + W, padx=(5, 5), pady=(5, 5))
 
         self.btn_search = Button(self, image=self.icn_search, command=self.search_car, height=30, width=30)
-        self.btn_search.grid(row=1, column=1, sticky=E + W, padx=(5, 5), pady=(5, 5))
+        self.btn_search.grid(row=2, column=1, sticky=E + W, padx=(5, 5), pady=(5, 5))
 
         self.lst_searchresult = Listbox(self)
-        self.lst_searchresult.grid(row=2, column=0, columnspan=2, rowspan=5, sticky=W + E + N + S, padx=(5, 5),
+        self.lst_searchresult.grid(row=3, column=0, columnspan=2, rowspan=5, sticky=W + E + N + S, padx=(5, 5),
                                    pady=(5, 5))
         self.lst_searchresult.bind('<<ListboxSelect>>', self.lst_callback)
 
