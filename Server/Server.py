@@ -13,13 +13,14 @@ from Models.EvCars import EvCars
 from Models.EvCarsCalc import EvCarsCalc
 
 class Server(threading.Thread):
-    def __init__(self, host, port, messages_queue):
+    def __init__(self, host, port, messages_queue, gui):
         threading.Thread.__init__(self, name="Thread-Server", daemon=True)
         self.serversocket = None
         self.__is_connected = False
         self.host = host
         self.port = port
         self.messages_queue = messages_queue
+        self.gui = gui
 
     @property
     def is_connected(self):
@@ -64,7 +65,7 @@ class Server(threading.Thread):
             socket_to_client, addr = self.serversocket.accept()
             self.print_bericht_gui_server(f"Got a connection from {addr}")
 
-            clh = ClientHandler(socket_to_client, self.messages_queue, self.evcars_calc)
+            clh = ClientHandler(socket_to_client, addr, self.messages_queue, self.evcars_calc, self.gui)
             clh.start()
             
 
