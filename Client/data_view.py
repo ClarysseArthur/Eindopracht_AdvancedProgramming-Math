@@ -34,19 +34,19 @@ class DataView(Frame):
         self.tabControl.add(self.graph, text='Graph')
         self.tabControl.pack(expand=1, fill="both")
 
-        self.icn_search = PhotoImage(file='./Assets/search.png').subsample(2)
-        self.icn_speed = PhotoImage(file='./Assets/speed.png').subsample(2)
-        self.icn_range = PhotoImage(file='./Assets/range.png').subsample(2)
+        self.icn_search = PhotoImage(file='../Assets/search.png').subsample(2)
+        self.icn_speed = PhotoImage(file='../Assets/speed.png').subsample(2)
+        self.icn_range = PhotoImage(file='../Assets/range.png').subsample(2)
         self.icn_effic = PhotoImage(
-            file='./Assets/efficiency.png').subsample(2)
-        self.icn_speed = PhotoImage(file='./Assets/speed.png').subsample(2)
-        self.icn_drive = PhotoImage(file='./Assets/drive.png').subsample(2)
-        self.icn_plug = PhotoImage(file='./Assets/plug.png').subsample(2)
-        self.icn_fast = PhotoImage(file='./Assets/fast.png').subsample(2)
-        self.icn_price = PhotoImage(file='./Assets/price.png').subsample(2)
-        self.icn_seat = PhotoImage(file='./Assets/seat.png').subsample(2)
-        self.icn_style = PhotoImage(file='./Assets/style.png').subsample(2)
-        self.icn_segment = PhotoImage(file='./Assets/segment.png').subsample(2)
+            file='../Assets/efficiency.png').subsample(2)
+        self.icn_speed = PhotoImage(file='../Assets/speed.png').subsample(2)
+        self.icn_drive = PhotoImage(file='../Assets/drive.png').subsample(2)
+        self.icn_plug = PhotoImage(file='../Assets/plug.png').subsample(2)
+        self.icn_fast = PhotoImage(file='../Assets/fast.png').subsample(2)
+        self.icn_price = PhotoImage(file='../Assets/price.png').subsample(2)
+        self.icn_seat = PhotoImage(file='../Assets/seat.png').subsample(2)
+        self.icn_style = PhotoImage(file='../Assets/style.png').subsample(2)
+        self.icn_segment = PhotoImage(file='../Assets/segment.png').subsample(2)
 
         Label(self.cars, text="Search a car", font=('Arial', 15, 'bold')).grid(row=0, column=0, sticky=E + W,
                                                                                columnspan=2)
@@ -78,7 +78,7 @@ class DataView(Frame):
         Label(self.cars, textvariable=self.txt_model, font=('Arial', 15), height=1).grid(row=1, column=3, sticky=W,
                                                                                          padx=(5, 5), pady=(5, 5))
 
-        self.img_temp = PhotoImage(file='./Assets/temp.png').subsample(2)
+        self.img_temp = PhotoImage(file='../Assets/temp.png').subsample(2)
         self.img_car = Label(self.cars, image=self.img_temp,
                              width=400, height=200, )
         self.img_car.grid(row=0, column=4, rowspan=3,
@@ -255,17 +255,17 @@ class DataView(Frame):
         Grid.columnconfigure(self.cars, 5, weight=1)
 
         # design graph tab
+        self.HEIGHT = 400
+        self.WIDTH = 1100
+        self.canvas = Canvas(self.graph, height=self.HEIGHT, width=self.WIDTH)
         self.selected_brand = StringVar()
         self.combo = Combobox(self.graph, textvariable=self.selected_brand)
         self.combo.set('Choose a brand')
         self.combo.place(relx=0.0, rely=0.0, anchor=NW)
         self.combo.bind('<<ComboboxSelected>>', self.graphdata)
-        self.HEIGHT = 400
-        self.WIDTH = 1100
-        self.canvas = Canvas(self.graph, height=self.HEIGHT, width=self.WIDTH)
-        self.image = PhotoImage(file='../Assets/temp.png').subsample(2)
-        self.canvas.create_image(
-            self.WIDTH / 2,  self.HEIGHT / 2, anchor="center", image=self.image)
+
+        self.image_graph = PhotoImage(file='../Assets/temp.png').subsample(2)
+        self.canvas.create_image(self.WIDTH / 2,  self.HEIGHT / 2, anchor="center", image=self.image_graph)
         self.canvas.pack()
 
     def search_car(self):
@@ -338,8 +338,18 @@ class DataView(Frame):
                             list(self.combo['values']) + [str(x)])
                         seen.add(x)
                     i += 1
+            elif commando['return'] == 'graph':
+                print('graph')
+                self.im = commando['data']
+                print(self.im)
+                # decodeit = open('image.png', 'wb')
+                # decodeit.write(base64.b64decode(car.photo))
+                # decodeit.close()
+                #
+                # self.img_temp = PhotoImage(file='image.png').subsample(2)
+                # self.img_car.configure(image=self.img_temp)
 
-                print('test')
+
 
     def graphdata(self, event):
         brand = self.selected_brand.get()

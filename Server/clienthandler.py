@@ -57,7 +57,7 @@ class ClientHandler(threading.Thread):
 
                 elif req['request'] == 'graph':
                     graph = EvGraph(req['query'])
-                    self.my_writer_obj.write('{"return": "search", "data": ' + graph.graph() + '}\n')
+                    self.my_writer_obj.write('{"return": "graph", "data": ' + graph.graph() + '}\n')
                     self.my_writer_obj.flush()
 
             commando = self.in_out_clh.readline().rstrip('\n')
