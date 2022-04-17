@@ -4,24 +4,12 @@ from matplotlib import pyplot as plt
 
 
 class EvGraph:
-    def __init__(self, cars):
-        self.cars = cars
+    def __init__(self, brand):
+        self.brand = brand
 
 
     def graph(self):
-        range = []
-        price = []
-        model = []
-
-        for x in self.cars:
-            if (x['Brand'] == 'Tesla'):
-                range.append(x['Range'])
-                model.append(x['Model'])
-                #price.append(x['PriceEuro'])
-
-        fig = plt.figure()
-        ax = fig.add_axes([0, 0, 1, 1])
-        ax.bar(range, model)
-        ax.set_ylabel('Range')
-
-        plt.show()
+        pass
+        # self.brand = het merk weer een grafiek van gemaakt moet worden
+        # Maak gwn een grafiek van elk model met de range om te beginnen
+        # return moet een gehashte string zijn van de foto -> zie Server.py lijn 44
