@@ -1,4 +1,5 @@
 import base64
+from io import BytesIO
 import socket
 import threading
 import tkinter
@@ -37,8 +38,7 @@ class DataView(Frame):
         self.icn_search = PhotoImage(file='../Assets/search.png').subsample(2)
         self.icn_speed = PhotoImage(file='../Assets/speed.png').subsample(2)
         self.icn_range = PhotoImage(file='../Assets/range.png').subsample(2)
-        self.icn_effic = PhotoImage(
-            file='../Assets/efficiency.png').subsample(2)
+        self.icn_effic = PhotoImage(file='../Assets/efficiency.png').subsample(2)
         self.icn_speed = PhotoImage(file='../Assets/speed.png').subsample(2)
         self.icn_drive = PhotoImage(file='../Assets/drive.png').subsample(2)
         self.icn_plug = PhotoImage(file='../Assets/plug.png').subsample(2)
@@ -48,47 +48,35 @@ class DataView(Frame):
         self.icn_style = PhotoImage(file='../Assets/style.png').subsample(2)
         self.icn_segment = PhotoImage(file='../Assets/segment.png').subsample(2)
 
-        Label(self.cars, text="Search a car", font=('Arial', 15, 'bold')).grid(row=0, column=0, sticky=E + W,
-                                                                               columnspan=2)
+        Label(self.cars, text="Search a car", font=('Arial', 15, 'bold')).grid(row=0, column=0, sticky=E + W,columnspan=2)
 
         self.entry_search = Entry(self.cars, width=30)
-        self.entry_search.grid(
-            row=1, column=0, sticky=E + W, padx=(5, 5), pady=(5, 5))
+        self.entry_search.grid(row=1, column=0, sticky=E + W, padx=(5, 5), pady=(5, 5))
 
-        self.btn_search = Button(
-            self.cars, image=self.icn_search, command=self.search_car, height=30, width=30)
-        self.btn_search.grid(row=1, column=1, sticky=E +
-                             W, padx=(5, 5), pady=(5, 5))
+        self.btn_search = Button(self.cars, image=self.icn_search, command=self.search_car, height=30, width=30)
+        self.btn_search.grid(row=1, column=1, sticky=E +W, padx=(5, 5), pady=(5, 5))
 
         self.lst_searchresult = Listbox(self.cars)
-        self.lst_searchresult.grid(row=2, column=0, columnspan=2, rowspan=5, sticky=W + E + N + S, padx=(5, 5),
-                                   pady=(5, 5))
+        self.lst_searchresult.grid(row=2, column=0, columnspan=2, rowspan=5, sticky=W + E + N + S, padx=(5, 5),pady=(5, 5))
         self.lst_searchresult.bind('<<ListboxSelect>>', self.lst_callback)
 
-        self.spt_split = ttk.Separator(self.cars, orient='vertical').grid(row=0, column=2, rowspan=8, sticky=N + S,
-                                                                          pady=(5, 5), padx=(5, 5), )
+        self.spt_split = ttk.Separator(self.cars, orient='vertical').grid(row=0, column=2, rowspan=8, sticky=N + S,pady=(5, 5), padx=(5, 5), )
 
         self.txt_brand = StringVar()
         self.txt_brand.set("0")
-        Label(self.cars, textvariable=self.txt_brand, font=('Arial', 15, 'bold')).grid(row=0, column=3, sticky=W,
-                                                                                       padx=(5, 5), pady=(5, 5))
+        Label(self.cars, textvariable=self.txt_brand, font=('Arial', 15, 'bold')).grid(row=0, column=3, sticky=W,padx=(5, 5), pady=(5, 5))
 
         self.txt_model = StringVar()
         self.txt_model.set("0")
-        Label(self.cars, textvariable=self.txt_model, font=('Arial', 15), height=1).grid(row=1, column=3, sticky=W,
-                                                                                         padx=(5, 5), pady=(5, 5))
+        Label(self.cars, textvariable=self.txt_model, font=('Arial', 15), height=1).grid(row=1, column=3, sticky=W,padx=(5, 5), pady=(5, 5))
 
-        self.img_temp = PhotoImage(file='../Assets/temp.png').subsample(2)
-        self.img_car = Label(self.cars, image=self.img_temp,
-                             width=400, height=200, )
-        self.img_car.grid(row=0, column=4, rowspan=3,
-                          sticky=W + E, padx=(5, 5), pady=(5, 5))
+        self.img_car_data = PhotoImage(file='../Assets/temp.png').subsample(2)
+        self.img_car = Label(self.cars, image=self.img_car_data,width=400, height=200, )
+        self.img_car.grid(row=0, column=4, rowspan=3,sticky=W + E, padx=(5, 5), pady=(5, 5))
 
-        self.spt_split = ttk.Separator(self.cars, orient='horizontal').grid(
-            row=3, column=3, columnspan=2, sticky=E + W)
+        self.spt_split = ttk.Separator(self.cars, orient='horizontal').grid(row=3, column=3, columnspan=2, sticky=E + W)
 
-        Label(self.cars, text="Specs", font=('Arial', 15, 'bold')).grid(row=4, column=3, sticky=E + W, columnspan=2,
-                                                                        pady=(5, 5), padx=(5, 5))
+        Label(self.cars, text="Specs", font=('Arial', 15, 'bold')).grid(row=4, column=3, sticky=E + W, columnspan=2,pady=(5, 5), padx=(5, 5))
 
         self.cnv_speccanvas_main = Canvas(self.cars, width=300, height=100)
         self.cnv_speccanvas_main.grid(row=5, column=3, columnspan=2)
@@ -264,8 +252,8 @@ class DataView(Frame):
         self.combo.place(relx=0.0, rely=0.0, anchor=NW)
         self.combo.bind('<<ComboboxSelected>>', self.graphdata)
 
-        self.image_graph = PhotoImage(file='../Assets/temp.png').subsample(2)
-        self.canvas.create_image(self.WIDTH / 2,  self.HEIGHT / 2, anchor="center", image=self.image_graph)
+        self.img_graph_data = PhotoImage(file='../Assets/temp.png').subsample(2)
+        self.canvas.create_image(self.WIDTH / 2,  self.HEIGHT / 2, anchor="center", image=self.img_graph_data)
         self.canvas.pack()
 
     def search_car(self):
@@ -298,8 +286,8 @@ class DataView(Frame):
             decodeit.write(base64.b64decode(car.photo))
             decodeit.close()
 
-            self.img_temp = PhotoImage(file='image.png').subsample(2)
-            self.img_car.configure(image=self.img_temp)
+            self.img_car_data = ImageTk.PhotoImage(Image.open('image.png'))
+            self.img_car.configure(image=self.img_car_data)
 
     def receive_messages(self):
         print('start')
@@ -334,24 +322,27 @@ class DataView(Frame):
                 seen = set()
                 for x in self.brand:
                     if x not in seen:
-                        self.combo['values'] = tuple(
-                            list(self.combo['values']) + [str(x)])
+                        self.combo['values'] = tuple(list(self.combo['values']) + [str(x)])
                         seen.add(x)
                     i += 1
+            
             elif commando['return'] == 'graph':
                 print('graph')
-                self.im = commando['data']
-                print(self.im)
+                print(commando['data'])
+
+                self.decodeit = open('graph.png', 'wb')
+                self.decodeit.write(base64.b64decode(commando['data']))
+                self.decodeit.close()
+
                 # decodeit = open('image.png', 'wb')
                 # decodeit.write(base64.b64decode(car.photo))
                 # decodeit.close()
-                #
-                # self.img_temp = PhotoImage(file='image.png').subsample(2)
-                # self.img_car.configure(image=self.img_temp)
+
+                self.img_graph_data = ImageTk.PhotoImage(Image.open('graph.png'))
+                #self.img_graph.configure(image=self.img_graph_data)
 
 
 
     def graphdata(self, event):
         brand = self.selected_brand.get()
         self.server.send_message_to_server('{"request": "graph", "query": "' + brand + '"}')
-

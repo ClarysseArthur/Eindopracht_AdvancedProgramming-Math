@@ -2,6 +2,7 @@ import base64
 import io
 import sys
 from tkinter import Image
+from cv2 import rotate
 
 import jsonpickle
 from matplotlib import pyplot as plt
@@ -13,7 +14,7 @@ class EvGraph:
 
 
     def graph(self):
-        my_writer_obj = open("csvjson.txt", mode='r')
+        my_writer_obj = open("../Assets/cars.json", mode='r')
         json_data = my_writer_obj.read()
         print(json_data)
         print()
@@ -27,19 +28,20 @@ class EvGraph:
                 self.range.append(x['Range'])
                 self.model.append(x['Model'])
 
-        self.fig = plt.figure()
-        self.ax = self.fig.add_axes([0, 0, 1, 1])
-        self.ax.bar(range, self.model)
-        self.ax.set_ylabel('Range')
-
-        plt.show()
-        self.img_graph = io.BytesIO()
-        plt.savefig(self.img_graph, format='png')
-        self.image = base64.b64encode(self.img_graph.read())
+        self.fig = plt
+        self.fig.xticks(rotation=80)
+        self.fig.xlabel("Model")
+        self.fig.ylabel("Range in km")
+        self.fig.title(f"Range per model - {self.brand}")
+        self.fig.bar(self.model, self.range)
+        self.fig.tight_layout()
 
 
-        return self.image
+        self.fig.savefig('graph.png')
+        with open(f"graph.png", "rb") as image2string: 
+            self.imageString = base64.b64encode(image2string.read())
 
-        # self.brand = het merk weer een grafiek van gemaakt moet worden
-        # Maak gwn een grafiek van elk model met de range om te beginnen
-        # return moet een gehashte string zijn van de foto -> zie Server.py lijn 44
+        print(self.imageString)
+
+        return self.imageString
+        
