@@ -13,6 +13,7 @@ class ClientHandler(threading.Thread):
 
     client_list = []
     search_list = {'all': 0, 'search': 0, 'graph': 0}
+    request_list = []
 
     def __init__(self, socketclient, addr, messages_queue, evcars_calc, gui):
         threading.Thread.__init__(self)
@@ -60,6 +61,7 @@ class ClientHandler(threading.Thread):
                     client.writer.flush()
                     ClientHandler.search_list['search'] += 1
                     self.print_bericht_gui_server(f'Send SEARCH info after request from {client}')
+                    ClientHandler.request_list.append([client, f"{client} searched for \'{req['query']}\'"])
 
                 elif req['request'] == 'graph':
                     graph = EvGraph(req['query'])
@@ -67,6 +69,7 @@ class ClientHandler(threading.Thread):
                     client.writer.flush()
                     ClientHandler.search_list['graph'] += 1
                     self.print_bericht_gui_server(f'Send GRAPH info after request from {client}')
+                    ClientHandler.request_list.append([client, f"{client} graphed \'{req['query']}\'"])
 
             commando = self.in_out_clh.readline().rstrip('\n')
 
