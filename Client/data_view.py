@@ -347,11 +347,8 @@ class DataView(Frame):
                 #self.img_graph.configure(image=self.img_graph_data)
 
             elif commando['return'] == 'message':
-                self.answer = simpledialog.askstring('Message from server', commando['data'])
+                messagebox.showinfo('Message from server', commando['data'])
                 
-
-
-
     def graphdata(self, event):
         brand = self.selected_brand.get()
         self.server.send_message_to_server('{"request": "graph", "query": "' + brand + '"}')
