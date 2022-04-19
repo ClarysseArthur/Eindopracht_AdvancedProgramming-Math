@@ -12,6 +12,7 @@ class ClientHandler(threading.Thread):
     numbers_clienthandlers = 0
 
     client_list = []
+    search_list = {'all': 0, 'search': 0, 'graph': 0}
 
     def __init__(self, socketclient, addr, messages_queue, evcars_calc, gui):
         threading.Thread.__init__(self)
@@ -45,6 +46,7 @@ class ClientHandler(threading.Thread):
         data = jsonpickle.encode(test)
         self.my_writer_obj.write('{"return": "all", "data": ' + data + '}\n')
         self.my_writer_obj.flush()
+        ClientHandler.search_list['all'] += 1
 
         while commando != "CLOSE":
             if commando != '':
@@ -54,11 +56,13 @@ class ClientHandler(threading.Thread):
                     data = jsonpickle.encode(self.evcars_calc.select_car(req['query']))
                     self.my_writer_obj.write('{"return": "search", "data": ' + data + '}\n')
                     self.my_writer_obj.flush()
+                    ClientHandler.search_list['search'] += 1
 
                 elif req['request'] == 'graph':
                     graph = EvGraph(req['query'])
                     self.my_writer_obj.write('{"return": "graph", "data": "' + str(graph.graph()) + '"}\n')
                     self.my_writer_obj.flush()
+                    ClientHandler.search_list['graph'] += 1
 
             commando = self.in_out_clh.readline().rstrip('\n')
 

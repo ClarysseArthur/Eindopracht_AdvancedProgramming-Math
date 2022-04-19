@@ -11,6 +11,7 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import pickle
 import duplicates
+from pyparsing import col
 
 
 class DataView(Frame):
@@ -59,6 +60,8 @@ class DataView(Frame):
         self.lst_searchresult = Listbox(self.cars)
         self.lst_searchresult.grid(row=2, column=0, columnspan=2, rowspan=5, sticky=W + E + N + S, padx=(5, 5),pady=(5, 5))
         self.lst_searchresult.bind('<<ListboxSelect>>', self.lst_callback)
+
+        Button(self.cars, text='Disconnect', command=self.disconnect_from_server).grid(row=12, column=0, columnspan=2)
 
         self.spt_split = ttk.Separator(self.cars, orient='vertical').grid(row=0, column=2, rowspan=8, sticky=N + S,pady=(5, 5), padx=(5, 5), )
 
