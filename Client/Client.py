@@ -66,24 +66,27 @@ class Start(Frame):
         self.close_connection()
 
     def make_connection_server(self, master):
-        if (self.entry_username.get() != '' and self.entry_email.get() != ''):
-            logging.info("Making connection with server...")
+        try:
+            if (self.entry_username.get() != '' and self.entry_email.get() != ''):
+                logging.info("Making connection with server...")
 
-            host = socket.gethostname()
-            port = 9999
-            self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                host = socket.gethostname()
+                port = 9999
+                self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-            self.s.connect((host, port))
-            self.in_out_server = self.s.makefile(mode='rw')
-            logging.info("Open connection with server succesfully")
+                self.s.connect((host, port))
+                self.in_out_server = self.s.makefile(mode='rw')
+                logging.info("Open connection with server succesfully")
 
-            client = Client(self.entry_username.get(), self.entry_email.get())
+                client = Client(self.entry_username.get(), self.entry_email.get())
 
-            self.send_message_to_server(jsonpickle.encode(client))
-            master.switch_frame("data", self)
+                self.send_message_to_server(jsonpickle.encode(client))
+                master.switch_frame("data", self)
 
-        else:
-            messagebox.showerror("Connect to server", "All fields must be filled in!")
+            else:
+                messagebox.showerror("Connaction failed", "All fields must be filled in!")
+        except:
+            messagebox.showerror("Connection failed", 'Are you connected to the internet? \nIs the server online?')
 
     def send_message_to_server(self, message):
         io_stream_server = self.s.makefile(mode='rw')
