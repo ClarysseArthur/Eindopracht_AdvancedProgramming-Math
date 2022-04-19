@@ -2,13 +2,15 @@
 import logging
 import socket
 from queue import Queue
+from sqlite3 import Row
 from threading import Thread
 from tkinter import *
 from tkinter import ttk
 from tkinter.tix import AUTO
-from turtle import left
+from turtle import left, width
 
 from pyparsing import col
+from sklearn.utils import column_or_1d
 
 from Server import Server
 from clienthandler import ClientHandler
@@ -59,14 +61,19 @@ class ServerWindow(Frame):
         Grid.columnconfigure(self.master_tab, 0, weight=1)
 
         # Users
-        Label(self.user_tab, text="User list", font=(
-            'Arial', 15, 'bold')).grid(row=0, column=0)
+        Label(self.user_tab, text="User list", font=('Arial', 15, 'bold')).grid(row=0, column=0)
 
-        self.cnv_user = Canvas(self.user_tab, width=300)
-        self.cnv_user.grid(row=1, column=0, sticky=W + E)
+        # self.lst_clients = Listbox(self.user_tab, width=50)
+        # self.lst_clients.grid(row=1, column=0, sticky=N + S + E + W)
+        # self.lst_clients.bind('<<ListboxSelect>>', self.lst_callback)
 
-        self.cnv_user.rowconfigure(10, weight=1)
-        self.cnv_user.columnconfigure(4, weight=1)
+        self.lst_clients = ttk.Treeview(self.user_tab, columns=('user', 'mail', 'ip', 'id'), show='headings')
+        self.lst_clients.grid(row=1, column=0)
+        self.lst_clients.heading('user', text='User Name')
+        self.lst_clients.heading('mail', text='E-mail')
+        self.lst_clients.heading('ip', text='IP address')
+        self.lst_clients.heading('id', text='id')
+        self.lst_clients.bind('<<TreeviewSelect>>', self.lst_callback)
 
         Grid.rowconfigure(self.master_tab, 2, weight=1)
         Grid.columnconfigure(self.master_tab, 0, weight=1)
@@ -123,6 +130,11 @@ class ServerWindow(Frame):
         self.txt_search.set(stats['search'])
         self.txt_graph.set(stats['graph'])
 
+    def lst_callback(self, event):
+        for selected_item in self.lst_clients.selection():
+            item = self.lst_clients.item(selected_item)
+            print(item)
+
     def start_stop_server(self):
         if self.server is not None:
             self.__stop_server()
@@ -157,19 +169,8 @@ class ServerWindow(Frame):
             message = self.messages_queue.get()
 
     def show_connected_users(self, clients):
-        for child in self.cnv_user.winfo_children():
-            child.destroy()
+        #self.lst_clients.delete(0, END)
 
-        i = 0
-        for client in clients:
-            Label(self.cnv_user, text=client.name, font=(
-                "Arial", 15)).grid(row=i, column=0, sticky=W + E)
-            Label(self.cnv_user, text=client.email, font=(
-                "Arial", 15)).grid(row=i, column=1, sticky=W + E)
-            Label(self.cnv_user, text=client.ip, font=("Arial", 15)).grid(
-                row=i, column=2, sticky=W + E)
-            Label(self.cnv_user, text=client.id, font=("Arial", 15)).grid(
-                row=i, column=3, sticky=W + E)
-            ttk.Separator(self.cnv_user, orient='horizontal').grid(
-                row=i+1, column=0, columnspan=4, sticky=W + E)
-            i += 2
+        for index, client in enumerate(clients):
+            text = (client.name, client.email, client.ip, client.id)
+            self.lst_clients.insert('', END, values=text)
