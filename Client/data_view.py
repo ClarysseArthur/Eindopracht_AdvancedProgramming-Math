@@ -4,6 +4,8 @@ import socket
 import threading
 import tkinter
 from tkinter import *
+from tkinter import simpledialog
+from tkinter.simpledialog import askstring
 from tkinter.ttk import Combobox
 
 import jsonpickle
@@ -343,6 +345,10 @@ class DataView(Frame):
 
                 self.img_graph_data = ImageTk.PhotoImage(Image.open('graph.png'))
                 #self.img_graph.configure(image=self.img_graph_data)
+
+            elif commando['return'] == 'message':
+                self.answer = simpledialog.askstring('Message from server', commando['data'])
+                
 
 
 

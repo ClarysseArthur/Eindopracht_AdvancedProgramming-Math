@@ -1,4 +1,5 @@
 # https://pythonprogramming.net/python-3-tkinter-basics-tutorial/
+from email import message
 import logging
 import socket
 from queue import Queue
@@ -6,6 +7,7 @@ from sqlite3 import Row
 from threading import Thread
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 from tkinter.tix import AUTO
 from turtle import left, width
 
@@ -61,22 +63,29 @@ class ServerWindow(Frame):
         Grid.columnconfigure(self.master_tab, 0, weight=1)
 
         # Users
-        Label(self.user_tab, text="User list", font=('Arial', 15, 'bold')).grid(row=0, column=0)
-
-        # self.lst_clients = Listbox(self.user_tab, width=50)
-        # self.lst_clients.grid(row=1, column=0, sticky=N + S + E + W)
-        # self.lst_clients.bind('<<ListboxSelect>>', self.lst_callback)
+        Label(self.user_tab, text="User list", font=('Arial', 15, 'bold')).grid(row=0, column=0, columnspan=2)
 
         self.lst_clients = ttk.Treeview(self.user_tab, columns=('user', 'mail', 'ip', 'id'), show='headings')
-        self.lst_clients.grid(row=1, column=0)
+        self.lst_clients.grid(row=1, column=0, columnspan=2, sticky=E + W)
         self.lst_clients.heading('user', text='User Name')
         self.lst_clients.heading('mail', text='E-mail')
         self.lst_clients.heading('ip', text='IP address')
         self.lst_clients.heading('id', text='id')
+        self.lst_clients.column('user', width=100)
+        self.lst_clients.column('mail', width=100)
+        self.lst_clients.column('ip', width=100)
+        self.lst_clients.column('id', width=100)
         self.lst_clients.bind('<<TreeviewSelect>>', self.lst_callback)
 
+        self.txt_message_to_client = Text(self.user_tab, width=20, height=1.5)
+        self.txt_message_to_client.grid(row=2, column=0, sticky=E + W,padx=(5, 5))
+
+        self.icn_send = PhotoImage(file='../Assets/send.png').subsample(2)
+        self.btnsend_message = Button(self.user_tab, image=self.icn_send, width=30, height=30, command=self.send_message_to_client)
+        self.btnsend_message.grid(row=2, column=1, sticky=W, padx=(5, 5))
+
         Grid.rowconfigure(self.master_tab, 2, weight=1)
-        Grid.columnconfigure(self.master_tab, 0, weight=1)
+        Grid.columnconfigure(self.master_tab, 2, weight=1)
 
         # Stats
         self.icn_search = PhotoImage(file='../Assets/search.png').subsample(2)
@@ -134,6 +143,23 @@ class ServerWindow(Frame):
         for selected_item in self.lst_clients.selection():
             item = self.lst_clients.item(selected_item)
             print(item)
+
+    def send_message_to_client(self):
+        item = ''
+
+        for selected_item in self.lst_clients.selection():
+            item = self.lst_clients.item(selected_item)
+
+        print(item)
+
+        if item != '' and self.txt_message_to_client != '':
+            for client in ClientHandler.client_list:
+                if client.id == item['values'][3]:
+                    print('{"return": "message", "data": "' + self.txt_message_to_client.get("1.0",'end-1c') + '"}\n')
+                    client.writer.write('{"return": "message", "data": "' + self.txt_message_to_client.get("1.0",'end-1c') + '"}\n')
+                    client.writer.flush()
+        else:
+            messagebox.showerror('Error sending message!', 'There must be a client selected \nTextbox must not be empty')
 
     def start_stop_server(self):
         if self.server is not None:

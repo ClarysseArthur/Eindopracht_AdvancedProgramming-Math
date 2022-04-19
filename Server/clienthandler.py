@@ -34,7 +34,7 @@ class ClientHandler(threading.Thread):
         commando = self.in_out_clh.readline().rstrip('\n')
 
         client = jsonpickle.decode(commando)
-        client.set_id_ip(self.addr[1], self.addr[0])
+        client.set_id_ip_writer(self.addr[1], self.addr[0], self.my_writer_obj)
         ClientHandler.client_list.append(client)
         print(ClientHandler.client_list)
         self.gui.show_connected_users(ClientHandler.client_list)
@@ -45,8 +45,8 @@ class ClientHandler(threading.Thread):
         test = self.evcars_calc.all_cars()
         print(test)
         data = jsonpickle.encode(test)
-        self.my_writer_obj.write('{"return": "all", "data": ' + data + '}\n')
-        self.my_writer_obj.flush()
+        client.writer.write('{"return": "all", "data": ' + data + '}\n')
+        client.writer.flush()
         ClientHandler.search_list['all'] += 1
         self.print_bericht_gui_server(f'Send ALL info for startup to {client}')
 
@@ -56,15 +56,15 @@ class ClientHandler(threading.Thread):
 
                 if req['request'] == 'search':
                     data = jsonpickle.encode(self.evcars_calc.select_car(req['query']))
-                    self.my_writer_obj.write('{"return": "search", "data": ' + data + '}\n')
-                    self.my_writer_obj.flush()
+                    client.writer.write('{"return": "search", "data": ' + data + '}\n')
+                    client.writer.flush()
                     ClientHandler.search_list['search'] += 1
                     self.print_bericht_gui_server(f'Send SEARCH info after request from {client}')
 
                 elif req['request'] == 'graph':
                     graph = EvGraph(req['query'])
-                    self.my_writer_obj.write('{"return": "graph", "data": "' + str(graph.graph()) + '"}\n')
-                    self.my_writer_obj.flush()
+                    client.writer.write('{"return": "graph", "data": "' + str(graph.graph()) + '"}\n')
+                    client.writer.flush()
                     ClientHandler.search_list['graph'] += 1
                     self.print_bericht_gui_server(f'Send GRAPH info after request from {client}')
 
