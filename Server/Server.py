@@ -63,7 +63,6 @@ class Server(threading.Thread):
 
             # establish a connection
             socket_to_client, addr = self.serversocket.accept()
-            self.print_bericht_gui_server(f"Got a connection from {addr}")
 
             clh = ClientHandler(socket_to_client, addr, self.messages_queue, self.evcars_calc, self.gui)
             clh.start()

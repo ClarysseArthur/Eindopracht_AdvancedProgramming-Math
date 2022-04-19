@@ -39,6 +39,7 @@ class ClientHandler(threading.Thread):
         print(ClientHandler.client_list)
         self.gui.show_connected_users(ClientHandler.client_list)
         self.client = client
+        self.print_bericht_gui_server(f'New client: {client}')
 
         commando = ''
         test = self.evcars_calc.all_cars()
@@ -47,6 +48,7 @@ class ClientHandler(threading.Thread):
         self.my_writer_obj.write('{"return": "all", "data": ' + data + '}\n')
         self.my_writer_obj.flush()
         ClientHandler.search_list['all'] += 1
+        self.print_bericht_gui_server(f'Send ALL info for startup to {client}')
 
         while commando != "CLOSE":
             if commando != '':
@@ -57,12 +59,14 @@ class ClientHandler(threading.Thread):
                     self.my_writer_obj.write('{"return": "search", "data": ' + data + '}\n')
                     self.my_writer_obj.flush()
                     ClientHandler.search_list['search'] += 1
+                    self.print_bericht_gui_server(f'Send SEARCH info after request from {client}')
 
                 elif req['request'] == 'graph':
                     graph = EvGraph(req['query'])
                     self.my_writer_obj.write('{"return": "graph", "data": "' + str(graph.graph()) + '"}\n')
                     self.my_writer_obj.flush()
                     ClientHandler.search_list['graph'] += 1
+                    self.print_bericht_gui_server(f'Send GRAPH info after request from {client}')
 
             commando = self.in_out_clh.readline().rstrip('\n')
 
