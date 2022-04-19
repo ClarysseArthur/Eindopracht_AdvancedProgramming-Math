@@ -169,7 +169,8 @@ class ServerWindow(Frame):
             message = self.messages_queue.get()
 
     def show_connected_users(self, clients):
-        #self.lst_clients.delete(0, END)
+        for selected_item in self.lst_clients.get_children():
+            self.lst_clients.delete(selected_item)
 
         for index, client in enumerate(clients):
             text = (client.name, client.email, client.ip, client.id)

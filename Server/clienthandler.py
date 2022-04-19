@@ -70,7 +70,7 @@ class ClientHandler(threading.Thread):
 
             commando = self.in_out_clh.readline().rstrip('\n')
 
-        self.print_bericht_gui_server("Connection with client closed...")
+        self.print_bericht_gui_server(f"Connection with {client} closed...")
         self.socketclient.close()
         ClientHandler.client_list.remove(self.client)
         self.gui.show_connected_users(ClientHandler.client_list)
