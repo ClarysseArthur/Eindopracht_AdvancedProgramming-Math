@@ -258,12 +258,12 @@ class DataView(Frame):
         self.selected_brand = StringVar()
         self.combo = Combobox(self.graph, textvariable=self.selected_brand)
         self.combo.set('Choose a brand')
-        self.combo.place(relx=0.0, rely=0.0, anchor=NW)
+        self.combo.grid(row=0, column=0, sticky='ns')
         self.combo.bind('<<ComboboxSelected>>', self.graphdata)
+        self.img_car_data = PhotoImage(file='../Assets/temp.png').subsample(2)
+        self.img_car_graph = Label(self.graph, image=self.img_car_data, width=640, height=480)
+        self.img_car_graph.grid(row=1, column=1, rowspan=3, sticky=W + E, padx=(5, 5), pady=(5, 5))
 
-        self.img_graph_data = PhotoImage(file='../Assets/temp.png').subsample(2)
-        self.canvas.create_image(self.WIDTH / 2,  self.HEIGHT / 2, anchor="center", image=self.img_graph_data)
-        self.canvas.pack()
 
         # Range
         self.columns = ('model', 'brand', 'range','price')
@@ -649,22 +649,19 @@ class DataView(Frame):
 
             elif commando['return'] == 'graph':
                 print('graph')
-                print(commando['data'])
-
-                self.decodeit = open('graph.png', 'wb')
-                self.decodeit.write(base64.b64decode(commando['data']))
-                self.decodeit.close()
-
-                # decodeit = open('image.png', 'wb')
-                # decodeit.write(base64.b64decode(car.photo))
-                # decodeit.close()
-
-                self.img_graph_data = ImageTk.PhotoImage(Image.open('graph.png'))
-                #self.img_graph.configure(image=self.img_graph_data)
+                data = commando['data']
+                data = data[2:-1]
+                self.decode = open('graph.png', 'wb')
+                self.decode.write(base64.b64decode(data))
+                self.decode.close()
+                self.img = (Image.open("graph.png"))
+                # Resize the Image using resize method
+                self.resized_image = self.img.resize((640, 480), Image.ANTIALIAS)
+                self.img_graph_data = ImageTk.PhotoImage(self.resized_image)
+                self.img_car_graph.configure(image=self.img_graph_data)
 
             elif commando['return'] == 'range':
                 print('range')
-                print(commando['data'])
                 self.tree.delete(*self.tree.get_children())
                 for car in commando['data']:
                     self.tree.insert(parent="", index=i, values=(car.model, car.brand, car.range, car.priceeuro))

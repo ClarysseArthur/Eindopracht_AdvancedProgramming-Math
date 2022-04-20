@@ -32,7 +32,7 @@ class EvGraph:
         self.fig.xlabel("Model")
         self.fig.ylabel("Range in km")
         self.fig.title(f"Range per model - {self.brand}")
-        self.fig.bar(self.model, self.range)
+        self.fig.bar(self.model, self.range,color='green')
         self.fig.tight_layout()
 
 
