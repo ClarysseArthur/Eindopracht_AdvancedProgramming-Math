@@ -93,8 +93,9 @@ class ServerWindow(Frame):
 
         variable = StringVar(self.cnv_history)
         variable.set("All")
-        self.drp_clients = OptionMenu(self.cnv_history, variable, "All")
-        self.drp_clients.pack(side=LEFT)
+        self.cmb_clients = ttk.Combobox(self.cnv_history, textvariable=variable)
+        self.cmb_clients.pack(side=LEFT)
+        self.cmb_clients.bind('<<ComboboxSelected>>', self.combobox_callback)
 
         self.icn_refresh = PhotoImage(file='../Assets/refresh.png').subsample(2)
         self.btn_refresh_history = Button(self.cnv_history, image=self.icn_refresh, command=self.refresh_user_data)
@@ -164,12 +165,18 @@ class ServerWindow(Frame):
 
     def refresh_user_data(self):
         self.lst_history.delete(0, END)
+        lijst = ['All']
+        lijst_unique = []
         
         for i, x in enumerate(ClientHandler.request_list):
-            self.drp_clients.setvar(str(x[0]), str(i))
+            lijst.append(x[0])
             self.lst_history.insert(i, x[1])
 
-        
+        for x in lijst:
+            if x not in lijst_unique:
+                lijst_unique.append(x)
+
+        self.cmb_clients['values'] = lijst_unique
 
     def send_message_to_client(self):
         item = ''
@@ -194,6 +201,15 @@ class ServerWindow(Frame):
         else:
             self.__start_server()
             self.lst_history.insert(0, 'No data yet (refresh)')
+
+    def combobox_callback(self, event):
+        selected = self.cmb_clients.get()
+        self.lst_history.delete(0, END)
+        for i, x in enumerate(ClientHandler.request_list):
+            if str(x[0]) == selected:
+                self.lst_history.insert(i, x[1])
+            elif selected == 'All':
+                self.lst_history.insert(i, x[1])
 
     def __stop_server(self):
         self.server.stop_server()
