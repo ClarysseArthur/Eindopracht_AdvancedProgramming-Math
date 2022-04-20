@@ -11,6 +11,7 @@ import jsonpickle
 from clienthandler import ClientHandler
 from Models.EvCars import EvCars
 from Models.EvCarsCalc import EvCarsCalc
+from Models.EvRange import EvRange
 
 class Server(threading.Thread):
     def __init__(self, host, port, messages_queue, gui):
@@ -46,6 +47,7 @@ class Server(threading.Thread):
                 self.cars_object_list.append(car_object)
     
         self.evcars_calc = EvCarsCalc(self.cars_object_list)
+        self.evcars_range = EvRange(self.cars_object_list)
 
     def stop_server(self):
         if self.serversocket is not None:
@@ -64,7 +66,7 @@ class Server(threading.Thread):
             # establish a connection
             socket_to_client, addr = self.serversocket.accept()
 
-            clh = ClientHandler(socket_to_client, addr, self.messages_queue, self.evcars_calc, self.gui)
+            clh = ClientHandler(socket_to_client, addr, self.messages_queue, self.evcars_calc,self.evcars_range, self.gui)
             clh.start()
             
 
