@@ -111,6 +111,8 @@ class ServerWindow(Frame):
         self.icn_search = PhotoImage(file='../Assets/search.png').subsample(2)
         self.icn_stat = PhotoImage(file='../Assets/stat.png').subsample(2)
         self.icn_all = PhotoImage(file='../Assets/all.png').subsample(2)
+        self.icn_range = PhotoImage(file='../Assets/range.png').subsample(2)
+        self.icn_compare = PhotoImage(file='../Assets/compare.png').subsample(2)
 
 
         Label(self.stats_tab, text="Stats", font=('Arial', 15, 'bold')).grid(row=0, column=0, sticky=W+E)
@@ -118,7 +120,7 @@ class ServerWindow(Frame):
         self.cnv_main = Canvas(self.stats_tab, width=300, height=500)
         self.cnv_main.grid(row=1, column=0, sticky=W + E)
         self.cnv_main.rowconfigure(3, weight=1)
-        self.cnv_main.columnconfigure(4, weight=1)
+        self.cnv_main.columnconfigure(6, weight=1)
 
         self.cnv_speccanvas1 = Canvas(self.cnv_main, width=300, height=100)
         self.cnv_speccanvas1.grid(row=0, column=0, sticky=W)
@@ -128,6 +130,12 @@ class ServerWindow(Frame):
 
         self.cnv_speccanvas3 = Canvas(self.cnv_main, width=300, height=100)
         self.cnv_speccanvas3.grid(row=2, column=0, sticky=W)
+
+        self.cnv_speccanvas4 = Canvas(self.cnv_main, width=300, height=100)
+        self.cnv_speccanvas4.grid(row=3, column=0, sticky=W)
+
+        self.cnv_speccanvas5 = Canvas(self.cnv_main, width=300, height=100)
+        self.cnv_speccanvas5.grid(row=4, column=0, sticky=W)
 
         self.txt_all = StringVar()
         self.txt_all.set('0')
@@ -147,7 +155,19 @@ class ServerWindow(Frame):
         Label(self.cnv_speccanvas3, text="Graph:",font=('Arial', 15)).pack(side=LEFT)
         Label(self.cnv_speccanvas3, textvariable=self.txt_graph, font=('Arial', 15, 'bold')).pack(side=LEFT)
 
-        Button(self.cnv_main, text='Refresh', command=self.refresh_stats).grid(row=3, column=0, sticky=W)
+        self.txt_range = StringVar()
+        self.txt_range.set('0')
+        Label(self.cnv_speccanvas4, image=self.icn_range,font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_speccanvas4, text="Range:",font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_speccanvas4, textvariable=self.txt_range, font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_compare = StringVar()
+        self.txt_compare.set('0')
+        Label(self.cnv_speccanvas5, image=self.icn_compare,font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_speccanvas5, text="Compare:",font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_speccanvas5, textvariable=self.txt_compare, font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        Button(self.cnv_main, text='Refresh', command=self.refresh_stats).grid(row=5, column=0, sticky=W)
 
         Grid.rowconfigure(self.stats_tab, 3, weight=1)
         Grid.columnconfigure(self.stats_tab, 1, weight=1)
@@ -157,6 +177,8 @@ class ServerWindow(Frame):
         self.txt_all.set(stats['all'])
         self.txt_search.set(stats['search'])
         self.txt_graph.set(stats['graph'])
+        self.txt_range.set(stats['range'])
+        self.txt_compare.set(stats['compare'])
 
     def lst_callback(self, event):
         for selected_item in self.lst_clients.selection():

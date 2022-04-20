@@ -22,3 +22,8 @@ class EvCarsCalc:
     def all_cars(self):
         sys.setrecursionlimit(3000)
         return self.cars
+
+    def compare_car(self, query):
+        for car in self.cars:
+            if str(car) == query:
+                return car

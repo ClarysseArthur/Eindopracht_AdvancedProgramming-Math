@@ -12,7 +12,7 @@ class ClientHandler(threading.Thread):
     numbers_clienthandlers = 0
 
     client_list = []
-    search_list = {'all': 0, 'search': 0, 'graph': 0}
+    search_list = {'all': 0, 'search': 0, 'graph': 0, 'range': 0, 'compare': 0}
     request_list = []
 
     def __init__(self, socketclient, addr, messages_queue, evcars_calc, gui):
@@ -70,6 +70,18 @@ class ClientHandler(threading.Thread):
                     ClientHandler.search_list['graph'] += 1
                     self.print_bericht_gui_server(f'Send GRAPH info after request from {client}')
                     ClientHandler.request_list.append([client, f"{client} graphed \'{req['query']}\'"])
+
+                elif req['request'] == 'compare':
+                    data = jsonpickle.encode(self.evcars_calc.compare_car(req['query']['name']))
+
+                    if req['query']['combo'] == '1':
+                        client.writer.write('{"return": "compare1", "data": ' + data + '}\n')
+                    else:
+                        client.writer.write('{"return": "compare2", "data": ' + data + '}\n')
+                    client.writer.flush()
+                    ClientHandler.search_list['compare'] += 1
+                    self.print_bericht_gui_server(f'Send {str(data)} to compare - {client}')
+                    ClientHandler.request_list.append([client, f"{client} compared \'{req['query']['name']}\'"])
 
             commando = self.in_out_clh.readline().rstrip('\n')
 

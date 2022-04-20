@@ -6,7 +6,7 @@ import tkinter
 from tkinter import *
 from tkinter import simpledialog
 from tkinter.simpledialog import askstring
-from tkinter.ttk import Combobox
+from tkinter.ttk import Combobox, Separator
 
 import jsonpickle
 from tkinter import ttk, messagebox
@@ -251,7 +251,7 @@ class DataView(Frame):
         Grid.rowconfigure(self.cars, 5, weight=1)
         Grid.columnconfigure(self.cars, 5, weight=1)
 
-        # design graph tab
+        # Graph
         self.HEIGHT = 400
         self.WIDTH = 1100
         self.canvas = Canvas(self.graph, height=self.HEIGHT, width=self.WIDTH)
@@ -265,18 +265,15 @@ class DataView(Frame):
         self.canvas.create_image(self.WIDTH / 2,  self.HEIGHT / 2, anchor="center", image=self.img_graph_data)
         self.canvas.pack()
 
+        # Range
         self.columns = ('model', 'brand', 'range','price')
-
         self.tree = ttk.Treeview(self.range, columns=self.columns, show='headings')
-
-        # define headings
         self.tree.heading('model', text='Model')
         self.tree.heading('brand', text='Brand')
         self.tree.heading('range', text='Range')
         self.tree.heading('price', text='Price')
         self.tree.grid(row=1, column=1, sticky='nsew',rowspan=3)
 
-        # add a scrollbar
         self.scrollbar = Scrollbar(self.range, orient=VERTICAL, command=self.tree.yview)
         self.tree.configure(yscroll=self.scrollbar.set)
         self.scrollbar.grid(row=1, column=2, sticky='ns')
@@ -287,6 +284,275 @@ class DataView(Frame):
 
         self.btn_search = Button(self.range, image=self.icn_search, height=30, width=30,command=self.range_car())
         self.btn_search.grid(row=2, column=0, sticky=E + W, padx=(5, 5), pady=(5, 5))
+
+        # Compare
+        self.compare.rowconfigure(4, weight=1)
+        self.compare.columnconfigure(3, weight=1)
+
+        Label(self.compare, text="Car 1:", font=('Arial', 15)).grid(row=0, column=0, sticky=W)
+
+        self.cmb_car1 = ttk.Combobox(self.compare, width=30)
+        self.cmb_car1.grid(row=1, column=0)
+        self.cmb_car1.bind('<<ComboboxSelected>>', self.callback_cmb_car1)
+
+        ttk.Separator(self.compare, orient='horizontal').grid(row=2, column=0, sticky=E + W,pady=(5, 5), padx=(5, 5))
+        
+        self.txt_car_name_1 = StringVar()
+        self.txt_car_name_1.set('Audi e-tron gt rs')
+        Label(self.compare, textvariable=self.txt_car_name_1, font=('Arial', 15, 'bold')).grid(row=3, column=0)
+
+        self.cnv_compare1 = Canvas(self.compare, width=300, height=100)
+        self.cnv_compare1.grid(row=4, column=0)
+        self.cnv_compare1.rowconfigure(11, weight=1)
+        self.cnv_compare1.columnconfigure(1, weight=1)
+
+        self.cnv_compare_1_1 = Canvas(self.cnv_compare1, width=300, height=100)
+        self.cnv_compare_1_1.grid(row=0, column=0, sticky=W)
+
+        self.cnv_compare_1_2 = Canvas(self.cnv_compare1, width=300, height=100)
+        self.cnv_compare_1_2.grid(row=1, column=0, sticky=W)
+
+        self.cnv_compare_1_3 = Canvas(self.cnv_compare1, width=300, height=100)
+        self.cnv_compare_1_3.grid(row=2, column=0, sticky=W)
+
+        self.cnv_compare_1_4 = Canvas(self.cnv_compare1, width=300, height=100)
+        self.cnv_compare_1_4.grid(row=3, column=0, sticky=W)
+
+        self.cnv_compare_1_5 = Canvas(self.cnv_compare1, width=300, height=100)
+        self.cnv_compare_1_5.grid(row=4, column=0, sticky=W)
+
+        self.cnv_compare_1_6 = Canvas(self.cnv_compare1, width=300, height=100)
+        self.cnv_compare_1_6.grid(row=5, column=0, sticky=W)
+
+        self.cnv_compare_1_7 = Canvas(self.cnv_compare1, width=300, height=100)
+        self.cnv_compare_1_7.grid(row=6, column=0, sticky=W)
+
+        self.cnv_compare_1_8 = Canvas(self.cnv_compare1, width=300, height=100)
+        self.cnv_compare_1_8.grid(row=7, column=0, sticky=W)
+
+        self.cnv_compare_1_9 = Canvas(self.cnv_compare1, width=300, height=100)
+        self.cnv_compare_1_9.grid(row=8, column=0, sticky=W)
+
+        self.cnv_compare_1_10 = Canvas(self.cnv_compare1, width=300, height=100)
+        self.cnv_compare_1_10.grid(row=9, column=0, sticky=W)
+
+        self.cnv_compare_1_11 = Canvas(self.cnv_compare1, width=300, height=100)
+        self.cnv_compare_1_11.grid(row=10, column=0, sticky=W)
+
+        self.cnv_compare_1_12 = Canvas(self.cnv_compare1, width=300, height=100)
+        self.cnv_compare_1_12.grid(row=11, column=0, sticky=W)
+
+        self.txt_topspeed_1 = StringVar()
+        self.txt_topspeed_1.set("0")
+        Label(self.cnv_compare_1_1, image=self.icn_speed).pack(side=LEFT)
+        Label(self.cnv_compare_1_1, text='Topspeed:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_1_1, textvariable=self.txt_topspeed_1,font=('Arial', 15, 'bold')).pack(side=LEFT)
+        Label(self.cnv_compare_1_1, text='km/h',font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_acceleration_1 = StringVar()
+        self.txt_acceleration_1.set("0")
+        Label(self.cnv_compare_1_2, image=self.icn_speed).pack(side=LEFT)
+        Label(self.cnv_compare_1_2, text='Acceleration:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_1_2, textvariable=self.txt_acceleration_1,font=('Arial', 15, 'bold')).pack(side=LEFT)
+        Label(self.cnv_compare_1_2, text='s', font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_range_1 = StringVar()
+        self.txt_range_1.set("0")
+        Label(self.cnv_compare_1_3, image=self.icn_range).pack(side=LEFT)
+        Label(self.cnv_compare_1_3, text='Range:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_1_3, textvariable=self.txt_range_1,font=('Arial', 15, 'bold')).pack(side=LEFT)
+        Label(self.cnv_compare_1_3, text='km', font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_efficiency_1 = StringVar()
+        self.txt_efficiency_1.set("0")
+        Label(self.cnv_compare_1_4, image=self.icn_effic).pack(side=LEFT)
+        Label(self.cnv_compare_1_4, text='Efficiency:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_1_4, textvariable=self.txt_efficiency_1,font=('Arial', 15, 'bold')).pack(side=LEFT)
+        Label(self.cnv_compare_1_4, text='Wh/km',font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_fastcharging_1 = StringVar()
+        self.txt_fastcharging_1.set("0")
+        Label(self.cnv_compare_1_5, image=self.icn_fast).pack(side=LEFT)
+        Label(self.cnv_compare_1_5, text='Fast charging:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_1_5, textvariable=self.txt_fastcharging_1,font=('Arial', 15, 'bold')).pack(side=LEFT)
+        Label(self.cnv_compare_1_5, text='km/h',font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_rapidcharging_1 = StringVar()
+        self.txt_rapidcharging_1.set("0")
+        Label(self.cnv_compare_1_6, image=self.icn_fast).pack(side=LEFT)
+        Label(self.cnv_compare_1_6, text='Rapid charging:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_1_6, textvariable=self.txt_rapidcharging_1,font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_powertrain_1 = StringVar()
+        self.txt_powertrain_1.set("0")
+        Label(self.cnv_compare_1_7, image=self.icn_drive).pack(side=LEFT)
+        Label(self.cnv_compare_1_7, text='Power train:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_1_7, textvariable=self.txt_powertrain_1,font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_plugtype_1 = StringVar()
+        self.txt_plugtype_1.set("0")
+        Label(self.cnv_compare_1_8, image=self.icn_plug).pack(side=LEFT)
+        Label(self.cnv_compare_1_8, text='Plug type:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_1_8, textvariable=self.txt_plugtype_1,font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_bodystyle_1 = StringVar()
+        self.txt_bodystyle_1.set("0")
+        Label(self.cnv_compare_1_9, image=self.icn_style).pack(side=LEFT)
+        Label(self.cnv_compare_1_9, text='Body style:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_1_9, textvariable=self.txt_bodystyle_1,font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_segment_1 = StringVar()
+        self.txt_segment_1.set("0")
+        Label(self.cnv_compare_1_10, image=self.icn_segment).pack(side=LEFT)
+        Label(self.cnv_compare_1_10, text='Segment:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_1_10, textvariable=self.txt_segment_1,font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_seats_1 = StringVar()
+        self.txt_seats_1.set("0")
+        Label(self.cnv_compare_1_11, image=self.icn_seat).pack(side=LEFT)
+        Label(self.cnv_compare_1_11, text='Seats:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_1_11, textvariable=self.txt_seats_1,font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_price_1 = StringVar()
+        self.txt_price_1.set("0")
+        Label(self.cnv_compare_1_12, image=self.icn_price).pack(side=LEFT)
+        Label(self.cnv_compare_1_12, text='Price:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_1_12, textvariable=self.txt_price_1,font=('Arial', 15, 'bold')).pack(side=LEFT)
+        Label(self.cnv_compare_1_12, text='euro', font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        ttk.Separator(self.compare, orient='vertical').grid(row=0, column=1, rowspan=5, sticky=N + S)
+
+        Label(self.compare, text="Car 2:", font=('Arial', 15)).grid(row=0, column=2, sticky=W)
+
+        self.cmb_car2 = ttk.Combobox(self.compare, width=30)
+        self.cmb_car2.grid(row=1, column=2)
+        self.cmb_car2.bind('<<ComboboxSelected>>', self.callback_cmb_car2)
+
+        ttk.Separator(self.compare, orient='horizontal').grid(row=2, column=2, sticky=E + W,pady=(5, 5), padx=(5, 5))
+        
+        self.txt_car_name_2 = StringVar()
+        self.txt_car_name_2.set('Audi e-tron gt rs')
+        Label(self.compare, textvariable=self.txt_car_name_2, font=('Arial', 15, 'bold')).grid(row=3, column=2)
+
+        self.cnv_compare2 = Canvas(self.compare, width=300, height=100)
+        self.cnv_compare2.grid(row=4, column=2)
+
+        self.cnv_compare2.rowconfigure(11, weight=1)
+        self.cnv_compare2.columnconfigure(1, weight=1)
+
+        self.cnv_compare_2_1 = Canvas(self.cnv_compare2, width=300, height=100)
+        self.cnv_compare_2_1.grid(row=0, column=0, sticky=W)
+
+        self.cnv_compare_2_2 = Canvas(self.cnv_compare2, width=300, height=100)
+        self.cnv_compare_2_2.grid(row=1, column=0, sticky=W)
+
+        self.cnv_compare_2_3 = Canvas(self.cnv_compare2, width=300, height=100)
+        self.cnv_compare_2_3.grid(row=2, column=0, sticky=W)
+
+        self.cnv_compare_2_4 = Canvas(self.cnv_compare2, width=300, height=100)
+        self.cnv_compare_2_4.grid(row=3, column=0, sticky=W)
+
+        self.cnv_compare_2_5 = Canvas(self.cnv_compare2, width=300, height=100)
+        self.cnv_compare_2_5.grid(row=4, column=0, sticky=W)
+
+        self.cnv_compare_2_6 = Canvas(self.cnv_compare2, width=300, height=100)
+        self.cnv_compare_2_6.grid(row=5, column=0, sticky=W)
+
+        self.cnv_compare_2_7 = Canvas(self.cnv_compare2, width=300, height=100)
+        self.cnv_compare_2_7.grid(row=6, column=0, sticky=W)
+
+        self.cnv_compare_2_8 = Canvas(self.cnv_compare2, width=300, height=100)
+        self.cnv_compare_2_8.grid(row=7, column=0, sticky=W)
+
+        self.cnv_compare_2_9 = Canvas(self.cnv_compare2, width=300, height=100)
+        self.cnv_compare_2_9.grid(row=8, column=0, sticky=W)
+
+        self.cnv_compare_2_10 = Canvas(self.cnv_compare2, width=300, height=100)
+        self.cnv_compare_2_10.grid(row=9, column=0, sticky=W)
+
+        self.cnv_compare_2_11 = Canvas(self.cnv_compare2, width=300, height=100)
+        self.cnv_compare_2_11.grid(row=10, column=0, sticky=W)
+
+        self.cnv_compare_2_12 = Canvas(self.cnv_compare2, width=300, height=100)
+        self.cnv_compare_2_12.grid(row=11, column=0, sticky=W)
+
+        self.txt_topspeed_2 = StringVar()
+        self.txt_topspeed_2.set("0")
+        Label(self.cnv_compare_2_1, image=self.icn_speed).pack(side=LEFT)
+        Label(self.cnv_compare_2_1, text='Topspeed:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_2_1, textvariable=self.txt_topspeed_2,font=('Arial', 15, 'bold')).pack(side=LEFT)
+        Label(self.cnv_compare_2_1, text='km/h',font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_acceleration_2 = StringVar()
+        self.txt_acceleration_2.set("0")
+        Label(self.cnv_compare_2_2, image=self.icn_speed).pack(side=LEFT)
+        Label(self.cnv_compare_2_2, text='Acceleration:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_2_2, textvariable=self.txt_acceleration_2,font=('Arial', 15, 'bold')).pack(side=LEFT)
+        Label(self.cnv_compare_2_2, text='s', font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_range_2 = StringVar()
+        self.txt_range_2.set("0")
+        Label(self.cnv_compare_2_3, image=self.icn_range).pack(side=LEFT)
+        Label(self.cnv_compare_2_3, text='Range:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_2_3, textvariable=self.txt_range_2,font=('Arial', 15, 'bold')).pack(side=LEFT)
+        Label(self.cnv_compare_2_3, text='km', font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_efficiency_2 = StringVar()
+        self.txt_efficiency_2.set("0")
+        Label(self.cnv_compare_2_4, image=self.icn_effic).pack(side=LEFT)
+        Label(self.cnv_compare_2_4, text='Efficiency:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_2_4, textvariable=self.txt_efficiency_2,font=('Arial', 15, 'bold')).pack(side=LEFT)
+        Label(self.cnv_compare_2_4, text='Wh/km',font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_fastcharging_2 = StringVar()
+        self.txt_fastcharging_2.set("0")
+        Label(self.cnv_compare_2_5, image=self.icn_fast).pack(side=LEFT)
+        Label(self.cnv_compare_2_5, text='Fast charging:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_2_5, textvariable=self.txt_fastcharging_2,font=('Arial', 15, 'bold')).pack(side=LEFT)
+        Label(self.cnv_compare_2_5, text='km/h',font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_rapidcharging_2 = StringVar()
+        self.txt_rapidcharging_2.set("0")
+        Label(self.cnv_compare_2_6, image=self.icn_fast).pack(side=LEFT)
+        Label(self.cnv_compare_2_6, text='Rapid charging:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_2_6, textvariable=self.txt_rapidcharging_2,font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_powertrain_2 = StringVar()
+        self.txt_powertrain_2.set("0")
+        Label(self.cnv_compare_2_7, image=self.icn_drive).pack(side=LEFT)
+        Label(self.cnv_compare_2_7, text='Power train:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_2_7, textvariable=self.txt_powertrain_2,font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_plugtype_2 = StringVar()
+        self.txt_plugtype_2.set("0")
+        Label(self.cnv_compare_2_8, image=self.icn_plug).pack(side=LEFT)
+        Label(self.cnv_compare_2_8, text='Plug type:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_2_8, textvariable=self.txt_plugtype_2,font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_bodystyle_2 = StringVar()
+        self.txt_bodystyle_2.set("0")
+        Label(self.cnv_compare_2_9, image=self.icn_style).pack(side=LEFT)
+        Label(self.cnv_compare_2_9, text='Body style:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_2_9, textvariable=self.txt_bodystyle_2,font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_segment_2 = StringVar()
+        self.txt_segment_2.set("0")
+        Label(self.cnv_compare_2_10, image=self.icn_segment).pack(side=LEFT)
+        Label(self.cnv_compare_2_10, text='Segment:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_2_10, textvariable=self.txt_segment_2,font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_seats_2 = StringVar()
+        self.txt_seats_2.set("0")
+        Label(self.cnv_compare_2_11, image=self.icn_seat).pack(side=LEFT)
+        Label(self.cnv_compare_2_11, text='Seats:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_2_11, textvariable=self.txt_seats_2,font=('Arial', 15, 'bold')).pack(side=LEFT)
+
+        self.txt_price_2 = StringVar()
+        self.txt_price_2.set("0")
+        Label(self.cnv_compare_2_12, image=self.icn_price).pack(side=LEFT)
+        Label(self.cnv_compare_2_12, text='Price:',font=('Arial', 15)).pack(side=LEFT)
+        Label(self.cnv_compare_2_12, textvariable=self.txt_price_2,font=('Arial', 15, 'bold')).pack(side=LEFT)
+        Label(self.cnv_compare_2_12, text='euro', font=('Arial', 15, 'bold')).pack(side=LEFT)
 
 
 
@@ -299,6 +565,12 @@ class DataView(Frame):
     def disconnect_from_server(self):
         self.server.close_connection()
         self.master.switch_frame("start", None)
+
+    def callback_cmb_car1(self, event):
+        self.server.send_message_to_server('{"request": "compare", "query": { "name": "' + self.cmb_car1.get() + '", "combo": "1" }}')
+
+    def callback_cmb_car2(self, event):
+        self.server.send_message_to_server('{"request": "compare", "query": { "name": "' + self.cmb_car2.get() + '", "combo": "2" }}')
 
     def lst_callback(self, event):
         for i in self.lst_searchresult.curselection():
@@ -363,9 +635,14 @@ class DataView(Frame):
                         seen.add(x)
                     i += 1
 
+                lijst = []
                 for car in commando['data']:
                     self.tree.insert(parent="",index=i,values=(car.model,car.brand,car.range,car.priceeuro))
                     i += 1
+                    lijst.append(car)
+
+                self.cmb_car1['values'] = lijst
+                self.cmb_car2['values'] = lijst
 
             elif commando['return'] == 'graph':
                 print('graph')
@@ -384,6 +661,40 @@ class DataView(Frame):
 
             elif commando['return'] == 'message':
                 messagebox.showinfo('Message from server', commando['data'])
+
+            elif commando['return'] == 'compare1':
+                car = commando['data']
+                self.txt_topspeed_1.set(car.topspeed)
+                self.txt_acceleration_1.set(car.accel)
+                self.txt_range_1.set(car.range)
+                self.txt_efficiency_1.set(car.efficiency)
+                self.txt_fastcharging_1.set(car.fastcharge)
+                self.txt_rapidcharging_1.set(car.rapidcharge)
+                self.txt_powertrain_1.set(car.powertrain)
+                self.txt_plugtype_1.set(car.plugtype)
+                #self.txt_brand_1.set(car.brand)
+                #self.txt_model_1.set(car.model)
+                self.txt_bodystyle_1.set(car.bodystyle)
+                self.txt_segment_1.set(car.segment)
+                self.txt_seats_1.set(car.seats)
+                self.txt_price_1.set(car.priceeuro)
+
+            elif commando['return'] == 'compare2':
+                car = commando['data']
+                self.txt_topspeed_2.set(car.topspeed)
+                self.txt_acceleration_2.set(car.accel)
+                self.txt_range_2.set(car.range)
+                self.txt_efficiency_2.set(car.efficiency)
+                self.txt_fastcharging_2.set(car.fastcharge)
+                self.txt_rapidcharging_2.set(car.rapidcharge)
+                self.txt_powertrain_2.set(car.powertrain)
+                self.txt_plugtype_2.set(car.plugtype)
+                #self.txt_brand_2.set(car.brand)
+                #self.txt_model_2.set(car.model)
+                self.txt_bodystyle_2.set(car.bodystyle)
+                self.txt_segment_2.set(car.segment)
+                self.txt_seats_2.set(car.seats)
+                self.txt_price_2.set(car.priceeuro)
                 
     def graphdata(self, event):
         brand = self.selected_brand.get()
