@@ -285,13 +285,14 @@ class DataView(Frame):
         self.entry_range = Entry(self.range, width=30)
         self.entry_range.grid(row=1, column=0, sticky=E + W, padx=(5, 5), pady=(5, 5))
 
-        self.btn_search = Button(self.range, image=self.icn_search, height=30, width=30,command=self.range_car())
+        self.btn_search = Button(self.range, image=self.icn_search, command=self.range_car, height=30, width=30)
         self.btn_search.grid(row=2, column=0, sticky=E + W, padx=(5, 5), pady=(5, 5))
 
 
 
     def range_car(self):
         self.server.send_message_to_server('{"request": "range", "query": "' + self.entry_range.get() + '"}')
+        print('click')
 
     def search_car(self):
         self.server.send_message_to_server('{"request": "search", "query": "' + self.entry_search.get() + '"}')
@@ -381,6 +382,16 @@ class DataView(Frame):
 
                 self.img_graph_data = ImageTk.PhotoImage(Image.open('graph.png'))
                 #self.img_graph.configure(image=self.img_graph_data)
+
+            elif commando['return'] == 'range':
+                print('range')
+                print(commando['data'])
+                self.tree.delete(*self.tree.get_children())
+                for car in commando['data']:
+                    self.tree.insert(parent="", index=i, values=(car.model, car.brand, car.range, car.priceeuro))
+                    i += 1
+
+
 
             elif commando['return'] == 'message':
                 messagebox.showinfo('Message from server', commando['data'])

@@ -5,6 +5,8 @@ import json
 
 from Models.EvCarsCalc import EvCarsCalc
 from Models.EvGraph import EvGraph
+from Models.EvRange import EvRange
+from Models.EvCars import EvCars
 
 
 class ClientHandler(threading.Thread):
@@ -12,10 +14,10 @@ class ClientHandler(threading.Thread):
     numbers_clienthandlers = 0
 
     client_list = []
-    search_list = {'all': 0, 'search': 0, 'graph': 0}
+    search_list = {'all': 0, 'search': 0, 'graph': 0,'range':0}
     request_list = []
 
-    def __init__(self, socketclient, addr, messages_queue, evcars_calc, gui):
+    def __init__(self, socketclient, addr, messages_queue, evcars_calc, evcars_range, gui):
         threading.Thread.__init__(self)
         # connectie with client
         self.socketclient = socketclient
@@ -29,6 +31,7 @@ class ClientHandler(threading.Thread):
         self.addr = addr
 
         self.evcars_calc = evcars_calc
+        self.evcars_range = evcars_range
         self.my_writer_obj = self.socketclient.makefile(mode='rw')
 
     def run(self):
@@ -70,6 +73,17 @@ class ClientHandler(threading.Thread):
                     ClientHandler.search_list['graph'] += 1
                     self.print_bericht_gui_server(f'Send GRAPH info after request from {client}')
                     ClientHandler.request_list.append([client, f"{client} graphed \'{req['query']}\'"])
+                elif req['request'] == 'range':
+
+                    data = jsonpickle.encode(self.evcars_range.rangecar(req['query']))
+                    client.writer.write('{"return": "range", "data": ' + data + '}\n')
+                    client.writer.flush()
+                    ClientHandler.search_list['range'] += 1
+                    self.print_bericht_gui_server(f'Send RANGE info after request from {client}')
+                    ClientHandler.request_list.append([client, f"{client} RANGED \'{req['query']}\'"])
+
+
+
 
             commando = self.in_out_clh.readline().rstrip('\n')
 
