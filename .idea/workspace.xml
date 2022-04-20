@@ -7,8 +7,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/data_view.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/data_view.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/image.png" beforeDir="false" afterPath="$PROJECT_DIR$/Client/image.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/Models/EvGraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Models/EvGraph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/graph.png" beforeDir="false" afterPath="$PROJECT_DIR$/Server/graph.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,8 +202,8 @@
     <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$EvCars.coverage" NAME="EvCars Coverage Results" MODIFIED="1649955078270" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Data" />
     <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$EvGraph.coverage" NAME="EvGraph Coverage Results" MODIFIED="1650191543655" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server/Models" />
     <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$clienthandler.coverage" NAME="clienthandler Coverage Results" MODIFIED="1649954190074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
-    <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$Client.coverage" NAME="Client Coverage Results" MODIFIED="1650443880579" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
-    <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$start.coverage" NAME="start Coverage Results" MODIFIED="1650442479935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
+    <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$Client.coverage" NAME="Client Coverage Results" MODIFIED="1650462656073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
+    <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$start.coverage" NAME="start Coverage Results" MODIFIED="1650461440734" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
     <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$data_view.coverage" NAME="data_view Coverage Results" MODIFIED="1650027895830" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Client" />
     <SUITE FILE_PATH="coverage/Eindopracht_AdvancedProgramming_Math$Server.coverage" NAME="Server Coverage Results" MODIFIED="1650192273087" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Server" />
   </component>

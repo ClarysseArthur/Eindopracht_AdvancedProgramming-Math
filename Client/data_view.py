@@ -274,14 +274,24 @@ class DataView(Frame):
         self.tree.heading('brand', text='Brand')
         self.tree.heading('range', text='Range')
         self.tree.heading('price', text='Price')
-        #self.tree.bind('<<TreeviewSelect>>')
-
-        self.tree.grid(row=0, column=0, sticky='nsew')
+        self.tree.grid(row=1, column=1, sticky='nsew',rowspan=3)
 
         # add a scrollbar
-        self.scrollbar = ttk.Scrollbar(self.range, orient=self.ttk.VERTICAL, command=self.tree.yview)
+        self.scrollbar = Scrollbar(self.range, orient=VERTICAL, command=self.tree.yview)
         self.tree.configure(yscroll=self.scrollbar.set)
-        self.scrollbar.grid(row=0, column=1, sticky='ns')
+        self.scrollbar.grid(row=1, column=2, sticky='ns')
+        Label(self.range, text="Search a car by range", font=('Arial', 15, 'bold')).grid(row=0, column=0, sticky=E + W,columnspan=2)
+
+        self.entry_range = Entry(self.range, width=30)
+        self.entry_range.grid(row=1, column=0, sticky=E + W, padx=(5, 5), pady=(5, 5))
+
+        self.btn_search = Button(self.range, image=self.icn_search, height=30, width=30,command=self.range_car())
+        self.btn_search.grid(row=2, column=0, sticky=E + W, padx=(5, 5), pady=(5, 5))
+
+
+
+    def range_car(self):
+        self.server.send_message_to_server('{"request": "range", "query": "' + self.entry_range.get() + '"}')
 
     def search_car(self):
         self.server.send_message_to_server('{"request": "search", "query": "' + self.entry_search.get() + '"}')
