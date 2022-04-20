@@ -2,7 +2,6 @@ import base64
 import io
 import sys
 from tkinter import Image
-from cv2 import rotate
 
 import jsonpickle
 from matplotlib import pyplot as plt
