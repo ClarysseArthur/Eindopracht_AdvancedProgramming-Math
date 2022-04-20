@@ -12,7 +12,7 @@ import jsonpickle
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import pickle
-import duplicates
+
 from pyparsing import col
 
 
@@ -33,9 +33,13 @@ class DataView(Frame):
 
         self.cars = ttk.Frame(self.tabControl)
         self.graph = ttk.Frame(self.tabControl)
+        self.range = ttk.Frame(self.tabControl)
+        self.compare = ttk.Frame(self.tabControl)
 
         self.tabControl.add(self.cars, text='Cars')
         self.tabControl.add(self.graph, text='Graph')
+        self.tabControl.add(self.range, text='Range')
+        self.tabControl.add(self.compare, text='Compare')
         self.tabControl.pack(expand=1, fill="both")
 
         self.icn_search = PhotoImage(file='../Assets/search.png').subsample(2)
@@ -261,6 +265,24 @@ class DataView(Frame):
         self.canvas.create_image(self.WIDTH / 2,  self.HEIGHT / 2, anchor="center", image=self.img_graph_data)
         self.canvas.pack()
 
+        self.columns = ('model', 'brand', 'range','price')
+
+        self.tree = ttk.Treeview(self.range, columns=self.columns, show='headings')
+
+        # define headings
+        self.tree.heading('model', text='Model')
+        self.tree.heading('brand', text='Brand')
+        self.tree.heading('range', text='Range')
+        self.tree.heading('price', text='Price')
+        #self.tree.bind('<<TreeviewSelect>>')
+
+        self.tree.grid(row=0, column=0, sticky='nsew')
+
+        # add a scrollbar
+        self.scrollbar = ttk.Scrollbar(self.range, orient=self.ttk.VERTICAL, command=self.tree.yview)
+        self.tree.configure(yscroll=self.scrollbar.set)
+        self.scrollbar.grid(row=0, column=1, sticky='ns')
+
     def search_car(self):
         self.server.send_message_to_server('{"request": "search", "query": "' + self.entry_search.get() + '"}')
 
@@ -330,7 +352,11 @@ class DataView(Frame):
                         self.combo['values'] = tuple(list(self.combo['values']) + [str(x)])
                         seen.add(x)
                     i += 1
-            
+
+                for car in commando['data']:
+                    self.tree.insert(parent="",index=i,values=(car.model,car.brand,car.range,car.priceeuro))
+                    i += 1
+
             elif commando['return'] == 'graph':
                 print('graph')
                 print(commando['data'])
