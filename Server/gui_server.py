@@ -165,7 +165,7 @@ class ServerWindow(Frame):
 
     def refresh_user_data(self):
         self.lst_history.delete(0, END)
-        lijst = []
+        lijst = ['All']
         lijst_unique = []
         
         for i, x in enumerate(ClientHandler.request_list):
@@ -207,7 +207,9 @@ class ServerWindow(Frame):
         self.lst_history.delete(0, END)
         for i, x in enumerate(ClientHandler.request_list):
             if str(x[0]) == selected:
-                self.lst_history.insert(i, x[1])   
+                self.lst_history.insert(i, x[1])
+            elif selected == 'All':
+                self.lst_history.insert(i, x[1])
 
     def __stop_server(self):
         self.server.stop_server()
