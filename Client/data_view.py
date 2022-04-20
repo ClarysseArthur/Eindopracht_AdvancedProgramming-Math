@@ -595,8 +595,10 @@ class DataView(Frame):
             decodeit = open('image.png', 'wb')
             decodeit.write(base64.b64decode(car.photo))
             decodeit.close()
-
-            self.img_car_data = ImageTk.PhotoImage(Image.open('image.png'))
+            self.img = (Image.open("image.png"))
+            # Resize the Image using resize method
+            self.resized_image = self.img.resize((425, 250), Image.ANTIALIAS)
+            self.img_car_data = ImageTk.PhotoImage(self.resized_image)
             self.img_car.configure(image=self.img_car_data)
 
     def receive_messages(self):
