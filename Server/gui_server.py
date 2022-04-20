@@ -164,9 +164,9 @@ class ServerWindow(Frame):
 
     def refresh_user_data(self):
         self.lst_history.delete(0, END)
-        self.drp_clients.insert()
+        
         for i, x in enumerate(ClientHandler.request_list):
-            values.append(x[0])
+            self.drp_clients.setvar(str(x[0]), str(i))
             self.lst_history.insert(i, x[1])
 
         

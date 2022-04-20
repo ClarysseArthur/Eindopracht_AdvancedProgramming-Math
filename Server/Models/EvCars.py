@@ -88,7 +88,7 @@ class EvCars:
         return f'{self.brand}, {self.model}'
 
     def __gt__ (self, other):
-        if self.model > other.model:
-            return self
+        if self.brand > other.brand:
+            return True
         else:
-            return self
+            return False
