@@ -206,8 +206,6 @@ class ServerWindow(Frame):
         for selected_item in self.lst_clients.selection():
             item = self.lst_clients.item(selected_item)
 
-        print(item)
-
         if item != '' and self.txt_message_to_client != '':
             for client in ClientHandler.client_list:
                 if client.id == item['values'][3]:

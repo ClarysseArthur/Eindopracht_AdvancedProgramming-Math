@@ -46,9 +46,9 @@ class ClientHandler(threading.Thread):
         self.print_bericht_gui_server(f'New client: {client}')
 
         commando = ''
-        test = self.evcars_calc.all_cars()
-        print(test)
-        data = jsonpickle.encode(test)
+        list_cars = self.evcars_calc.all_cars()
+        print(list_cars)
+        data = jsonpickle.encode(list_cars)
         client.writer.write('{"return": "all", "data": ' + data + '}\n')
         client.writer.flush()
         ClientHandler.search_list['all'] += 1
@@ -73,17 +73,14 @@ class ClientHandler(threading.Thread):
                     ClientHandler.search_list['graph'] += 1
                     self.print_bericht_gui_server(f'Send GRAPH info after request from {client}')
                     ClientHandler.request_list.append([client, f"{client} graphed \'{req['query']}\'"])
-                elif req['request'] == 'range':
 
+                elif req['request'] == 'range':
                     data = jsonpickle.encode(self.evcars_range.rangecar(req['query']))
                     client.writer.write('{"return": "range", "data": ' + data + '}\n')
                     client.writer.flush()
                     ClientHandler.search_list['range'] += 1
                     self.print_bericht_gui_server(f'Send RANGE info after request from {client}')
                     ClientHandler.request_list.append([client, f"{client} RANGED \'{req['query']}\'"])
-
-
-
 
                 elif req['request'] == 'compare':
                     data = jsonpickle.encode(self.evcars_calc.compare_car(req['query']['name']))
