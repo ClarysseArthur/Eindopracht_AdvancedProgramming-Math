@@ -36,8 +36,8 @@ class DataView(Frame):
         self.range = ttk.Frame(self.tabControl)
         self.compare = ttk.Frame(self.tabControl)
 
-        self.tabControl.add(self.cars, text='Cars')
-        self.tabControl.add(self.graph, text='Graph')
+        self.tabControl.add(self.cars, text='Home')
+        self.tabControl.add(self.graph, text='Models')
         self.tabControl.add(self.range, text='Range')
         self.tabControl.add(self.compare, text='Compare')
         self.tabControl.pack(expand=1, fill="both")
