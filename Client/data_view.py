@@ -67,7 +67,7 @@ class DataView(Frame):
         self.lst_searchresult.grid(row=2, column=0, columnspan=2, rowspan=5, sticky=W + E + N + S, padx=(5, 5),pady=(5, 5))
         self.lst_searchresult.bind('<<ListboxSelect>>', self.lst_callback)
 
-        Button(self.cars, text='Disconnect', command=self.disconnect_from_server).grid(row=12, column=0, columnspan=2)
+        Button(self.cars, text='Disconnect', command=self.disconnect_from_server).grid(row=8, column=0, sticky=E + W)
 
         self.spt_split = ttk.Separator(self.cars, orient='vertical').grid(row=0, column=2, rowspan=8, sticky=N + S,pady=(5, 5), padx=(5, 5), )
 
@@ -263,6 +263,7 @@ class DataView(Frame):
         self.img_car_data = PhotoImage(file='../Assets/temp.png').subsample(2)
         self.img_car_graph = Label(self.graph, image=self.img_car_data, width=640, height=480)
         self.img_car_graph.grid(row=1, column=1, rowspan=3, sticky=W + E, padx=(5, 5), pady=(5, 5))
+        Button(self.graph, text='Disconnect', command=self.disconnect_from_server).grid(row=2, column=0, sticky=E + W)
 
 
         # Range
@@ -285,6 +286,8 @@ class DataView(Frame):
         self.btn_search = Button(self.range, image=self.icn_search, command=self.range_car, height=30, width=30)
         self.btn_search.grid(row=2, column=0, sticky=E + W, padx=(5, 5), pady=(5, 5))
 
+        Button(self.range, text='Disconnect', command=self.disconnect_from_server).grid(row=3, column=0, sticky=E + W)
+
         # Compare
         self.compare.rowconfigure(4, weight=1)
         self.compare.columnconfigure(3, weight=1)
@@ -300,6 +303,8 @@ class DataView(Frame):
         self.txt_car_name_1 = StringVar()
         self.txt_car_name_1.set('Audi e-tron gt rs')
         Label(self.compare, textvariable=self.txt_car_name_1, font=('Arial', 15, 'bold')).grid(row=3, column=0)
+
+        Button(self.compare, text='Disconnect', command=self.disconnect_from_server).grid(row=5, column=0, sticky=E + W)
 
         self.cnv_compare1 = Canvas(self.compare, width=300, height=100)
         self.cnv_compare1.grid(row=4, column=0)
@@ -554,11 +559,18 @@ class DataView(Frame):
         Label(self.cnv_compare_2_12, textvariable=self.txt_price_2,font=('Arial', 15, 'bold')).pack(side=LEFT)
         Label(self.cnv_compare_2_12, text='euro', font=('Arial', 15, 'bold')).pack(side=LEFT)
 
-
-
     def range_car(self):
-        self.server.send_message_to_server('{"request": "range", "query": "' + self.entry_range.get() + '"}')
-        print('click')
+        if self.tryParseInt(self.entry_range.get()):
+            self.server.send_message_to_server('{"request": "range", "query": "' + self.entry_range.get() + '"}')
+        else:
+            messagebox.showerror('Error', 'Please enter a valid number (integer)')
+
+    def tryParseInt(self, input):
+        try:
+            int(input)
+            return True
+        except ValueError:
+            return False 
 
     def search_car(self):
         self.server.send_message_to_server('{"request": "search", "query": "' + self.entry_search.get() + '"}')
@@ -667,8 +679,6 @@ class DataView(Frame):
                     self.tree.insert(parent="", index=i, values=(car.model, car.brand, car.range, car.priceeuro))
                     i += 1
 
-
-
             elif commando['return'] == 'message':
                 messagebox.showinfo('Message from server', commando['data'])
 
@@ -688,6 +698,7 @@ class DataView(Frame):
                 self.txt_segment_1.set(car.segment)
                 self.txt_seats_1.set(car.seats)
                 self.txt_price_1.set(car.priceeuro)
+                self.txt_car_name_1.set(car.brand + ' ' + car.model)
 
             elif commando['return'] == 'compare2':
                 car = commando['data']
@@ -705,6 +716,7 @@ class DataView(Frame):
                 self.txt_segment_2.set(car.segment)
                 self.txt_seats_2.set(car.seats)
                 self.txt_price_2.set(car.priceeuro)
+                self.txt_car_name_2.set(car.brand + ' ' + car.model)
                 
     def graphdata(self, event):
         brand = self.selected_brand.get()

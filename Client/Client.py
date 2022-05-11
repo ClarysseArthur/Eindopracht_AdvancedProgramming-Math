@@ -16,21 +16,18 @@ class StartApp(Tk):
         self._frame = None
         self.switch_frame("start", None)
 
-    # we switchen tss 3 frames: startframe <> bmiframe, startframe <> numbersframe
-
     def switch_frame(self, name_class, server):
         if self._frame is not None:
             self._frame.destroy()
     
         if name_class == "start":
-            new_frame = Start(self)
+            self.new_frame = Start(self)
         elif name_class == "data":
-            new_frame = DataView(self, server)
+            self.new_frame = DataView(self, server)
 
-        if new_frame is not None:
-            self._frame = new_frame
+        if self.new_frame is not None:
+            self._frame = self.new_frame
             self._frame.pack()
-
 
 class Start(Frame):
     def __init__(self, master):
