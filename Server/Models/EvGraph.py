@@ -28,6 +28,7 @@ class EvGraph:
                 self.model.append(x['Model'])
 
         self.fig = plt
+        self.fig.clf();
         self.fig.xticks(rotation=80)
         self.fig.xlabel("Model")
         self.fig.ylabel("Range in km")
@@ -43,4 +44,3 @@ class EvGraph:
         print(self.imageString)
 
         return self.imageString
-        

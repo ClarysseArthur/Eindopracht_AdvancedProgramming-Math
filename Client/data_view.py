@@ -67,7 +67,7 @@ class DataView(Frame):
         self.lst_searchresult.grid(row=2, column=0, columnspan=2, rowspan=5, sticky=W + E + N + S, padx=(5, 5),pady=(5, 5))
         self.lst_searchresult.bind('<<ListboxSelect>>', self.lst_callback)
 
-        Button(self.cars, text='Disconnect', command=self.disconnect_from_server).grid(row=12, column=0, columnspan=2)
+        Button(self.cars, text='Disconnect', command= self.disconnect_from_server).grid(row=12, column=0, columnspan=2)
 
         self.spt_split = ttk.Separator(self.cars, orient='vertical').grid(row=0, column=2, rowspan=8, sticky=N + S,pady=(5, 5), padx=(5, 5), )
 
@@ -276,7 +276,7 @@ class DataView(Frame):
 
         self.scrollbar = Scrollbar(self.range, orient=VERTICAL, command=self.tree.yview)
         self.tree.configure(yscroll=self.scrollbar.set)
-        self.scrollbar.grid(row=1, column=2, sticky='ns')
+        self.scrollbar.grid(row=1, column=2, sticky='nsew', rowspan=3)
         Label(self.range, text="Search a car by range", font=('Arial', 15, 'bold')).grid(row=0, column=0, sticky=E + W,columnspan=2)
 
         self.entry_range = Entry(self.range, width=30)
@@ -564,8 +564,9 @@ class DataView(Frame):
         self.server.send_message_to_server('{"request": "search", "query": "' + self.entry_search.get() + '"}')
 
     def disconnect_from_server(self):
-        self.server.close_connection()
         self.master.switch_frame("start", None)
+        self.server.close_connection()
+
 
     def callback_cmb_car1(self, event):
         self.server.send_message_to_server('{"request": "compare", "query": { "name": "' + self.cmb_car1.get() + '", "combo": "1" }}')

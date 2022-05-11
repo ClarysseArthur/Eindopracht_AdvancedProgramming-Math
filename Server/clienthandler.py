@@ -47,6 +47,7 @@ class ClientHandler(threading.Thread):
 
         commando = ''
         list_cars = self.evcars_calc.all_cars()
+        list_cars = sorted(list_cars)
         print(list_cars)
         data = jsonpickle.encode(list_cars)
         client.writer.write('{"return": "all", "data": ' + data + '}\n')

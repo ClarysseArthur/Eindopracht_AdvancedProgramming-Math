@@ -21,7 +21,7 @@ class StartApp(Tk):
     def switch_frame(self, name_class, server):
         if self._frame is not None:
             self._frame.destroy()
-    
+
         if name_class == "start":
             new_frame = Start(self)
         elif name_class == "data":
@@ -30,6 +30,7 @@ class StartApp(Tk):
         if new_frame is not None:
             self._frame = new_frame
             self._frame.pack()
+
 
 
 class Start(Frame):
