@@ -4,7 +4,7 @@ from tkinter import *
 
 from gui_server import ServerWindow
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.CRITICAL)
 
 def callback():
     logging.debug("Active threads:")

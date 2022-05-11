@@ -1,20 +1,10 @@
-# https://pythonprogramming.net/python-3-tkinter-basics-tutorial/
-from email import message
 import logging
 import socket
 from queue import Queue
-from sqlite3 import Row
 from threading import Thread
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-from tkinter.tix import AUTO
-from turtle import left, st, width
-from numpy import imag
-
-from pyparsing import col
-from sklearn.utils import column_or_1d
-
 from Server import Server
 from clienthandler import ClientHandler
 
@@ -183,7 +173,6 @@ class ServerWindow(Frame):
     def lst_callback(self, event):
         for selected_item in self.lst_clients.selection():
             item = self.lst_clients.item(selected_item)
-            print(item)
 
     def refresh_user_data(self):
         self.lst_history.delete(0, END)
@@ -209,7 +198,6 @@ class ServerWindow(Frame):
         if item != '' and self.txt_message_to_client != '':
             for client in ClientHandler.client_list:
                 if client.id == item['values'][3]:
-                    print('{"return": "message", "data": "' + self.txt_message_to_client.get("1.0",'end-1c') + '"}\n')
                     client.writer.write('{"return": "message", "data": "' + self.txt_message_to_client.get("1.0",'end-1c') + '"}\n')
                     client.writer.flush()
         else:

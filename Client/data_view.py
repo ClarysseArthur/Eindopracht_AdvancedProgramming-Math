@@ -1,19 +1,10 @@
 import base64
-from io import BytesIO
-import socket
 import threading
-import tkinter
 from tkinter import *
-from tkinter import simpledialog
-from tkinter.simpledialog import askstring
-from tkinter.ttk import Combobox, Separator
-
+from tkinter.ttk import Combobox
 import jsonpickle
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
-import pickle
-
-from pyparsing import col
 
 
 class DataView(Frame):
@@ -576,8 +567,10 @@ class DataView(Frame):
         self.server.send_message_to_server('{"request": "search", "query": "' + self.entry_search.get() + '"}')
 
     def disconnect_from_server(self):
-        self.master.switch_frame("start", None)
-        self.server.close_connection()
+        if messagebox.askokcancel("Quit", "Do you want to quit?"):
+            self.tabControl.destroy()
+            self.master.switch_frame("start", None)
+            self.server.close_connection()
 
 
     def callback_cmb_car1(self, event):

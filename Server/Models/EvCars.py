@@ -1,8 +1,3 @@
-from pyexpat import model
-import jsonpickle
-from sklearn.preprocessing import PowerTransformer
-
-
 class EvCars:
     def __init__(self, brand, model, accel, topspeed, range, efficiency, fastcharge, rapidcharge, powertrain, plugtype, bodystyle, segment, seats, priceeuro, photo):
         self.__brand = brand

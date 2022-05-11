@@ -2,12 +2,7 @@ import base64
 import logging
 import socket
 import threading
-import os
-import math
-import pickle
-
 import jsonpickle
-
 from clienthandler import ClientHandler
 from Models.EvCars import EvCars
 from Models.EvCarsCalc import EvCarsCalc
@@ -54,28 +49,31 @@ class Server(threading.Thread):
             self.serversocket.close()
             self.serversocket = None
             self.__is_connected = False
+            ClientHandler.client_list = []
+            ClientHandler.search_list = {'all': 0, 'search': 0, 'graph': 0, 'range': 0, 'compare': 0}
+            ClientHandler.request_list = []
             logging.info("Serversocket closed")
 
     def run(self):
         number_received_message = 0
-        #try:
-        while True:
-            logging.debug("Server waiting for a new client")
-            self.print_bericht_gui_server("waiting for a new client...")
+        try:
+            while True:
+                logging.debug("Server waiting for a new client")
+                self.print_bericht_gui_server("waiting for a new client...")
 
-            # establish a connection
-            socket_to_client, addr = self.serversocket.accept()
+                # establish a connection
+                socket_to_client, addr = self.serversocket.accept()
 
-            clh = ClientHandler(socket_to_client, addr, self.messages_queue, self.evcars_calc,self.evcars_range, self.gui)
-            clh.start()
-            
+                clh = ClientHandler(socket_to_client, addr, self.messages_queue, self.evcars_calc,self.evcars_range, self.gui)
+                clh.start()
+                
 
-            self.print_bericht_gui_server(
-                f"Current Thread count: {threading.active_count()}.")
+                self.print_bericht_gui_server(
+                    f"Current Thread count: {threading.active_count()}.")
 
-        #except Exception as ex:
-         #   self.print_bericht_gui_server(ex)
-          #  logging.debug("Thread server ended")
+        except Exception as ex:
+           self.print_bericht_gui_server(ex)
+           logging.debug("Thread server ended")
 
     def print_bericht_gui_server(self, message):
         self.messages_queue.put(f"Server:> {message}")

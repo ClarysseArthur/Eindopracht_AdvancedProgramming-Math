@@ -1,4 +1,3 @@
-# https://pythonprogramming.net/python-3-tkinter-basics-tutorial/
 from argparse import Action
 import logging
 import socket

@@ -1,12 +1,6 @@
-from multiprocessing.connection import Client
 import threading
 import jsonpickle
-import json
-
-from Models.EvCarsCalc import EvCarsCalc
 from Models.EvGraph import EvGraph
-from Models.EvRange import EvRange
-from Models.EvCars import EvCars
 
 
 class ClientHandler(threading.Thread):
@@ -40,7 +34,6 @@ class ClientHandler(threading.Thread):
         client = jsonpickle.decode(commando)
         client.set_id_ip_writer(self.addr[1], self.addr[0], self.my_writer_obj)
         ClientHandler.client_list.append(client)
-        print(ClientHandler.client_list)
         self.gui.show_connected_users(ClientHandler.client_list)
         self.client = client
         self.print_bericht_gui_server(f'New client: {client}')
@@ -48,7 +41,6 @@ class ClientHandler(threading.Thread):
         commando = ''
         list_cars = self.evcars_calc.all_cars()
         list_cars = sorted(list_cars)
-        print(list_cars)
         data = jsonpickle.encode(list_cars)
         client.writer.write('{"return": "all", "data": ' + data + '}\n')
         client.writer.flush()
