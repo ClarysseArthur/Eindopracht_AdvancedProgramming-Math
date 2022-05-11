@@ -636,6 +636,31 @@ class DataView(Frame):
                 print('all')
                 self.selected_cars = commando['data']
                 seen = set()
+                car = self.selected_cars[2]
+
+                self.txt_topspeed.set(car.topspeed)
+                self.txt_acceleration.set(car.accel)
+                self.txt_range.set(car.range)
+                self.txt_efficiency.set(car.efficiency)
+                self.txt_fastcharging.set(car.fastcharge)
+                self.txt_rapidcharging.set(car.rapidcharge)
+                self.txt_powertrain.set(car.powertrain)
+                self.txt_plugtype.set(car.plugtype)
+                self.txt_brand.set(car.brand)
+                self.txt_model.set(car.model)
+                self.txt_bodystyle.set(car.bodystyle)
+                self.txt_segment.set(car.segment)
+                self.txt_seats.set(car.seats)
+                self.txt_price.set(car.priceeuro)
+
+                decodeit = open('image.png', 'wb')
+                decodeit.write(base64.b64decode(car.photo))
+                decodeit.close()
+                self.img = (Image.open("image.png"))
+                # Resize the Image using resize method
+                self.resized_image = self.img.resize((425, 250), Image.ANTIALIAS)
+                self.img_car_data = ImageTk.PhotoImage(self.resized_image)
+                self.img_car.configure(image=self.img_car_data)
                 i = 0
                 self.brand = []
                 for car in commando['data']:
