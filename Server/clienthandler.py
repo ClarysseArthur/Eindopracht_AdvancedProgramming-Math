@@ -76,7 +76,7 @@ class ClientHandler(threading.Thread):
                     ClientHandler.request_list.append([client, f"{client} graphed \'{req['query']}\'"])
 
                 elif req['request'] == 'range':
-                    data = jsonpickle.encode(self.evcars_range.rangecar(req['query']))
+                    data = jsonpickle.encode(sorted(self.evcars_range.rangecar(req['query'])))
                     client.writer.write('{"return": "range", "data": ' + data + '}\n')
                     client.writer.flush()
                     ClientHandler.search_list['range'] += 1
