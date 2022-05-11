@@ -1,2 +1,0 @@
-- Name in compare
-- Fix window after disconnect
